@@ -21,9 +21,32 @@ const genderError = document.getElementById('gender_error');
 const password1Error = document.getElementById('password1_error');
 const password2Error = document.getElementById('password2_error');
 
+//eye
+const eyes = document.getElementsByClassName('open');
+
+for (const eye of eyes) {
+    eye.addEventListener('click', () => {
+        const targetId = eye.getAttribute('data-target');
+        const targetPassword = document.getElementById(targetId);
+
+        if (targetPassword.type === 'password') {
+            targetPassword.type = 'text';
+            eye.classList.remove('bi-eye-fill');
+            eye.classList.add('bi-eye-slash-fill');
+        } 
+        else {
+            targetPassword.type = 'password';
+            eye.classList.remove('bi-eye-slash-fill');
+            eye.classList.add('bi-eye-fill');
+
+        }
+    });
+}
 
 
 
+
+//form validation when the submit button is clicked
 form.addEventListener('submit', (e) => {
     //prevent form submission
       e.preventDefault();
