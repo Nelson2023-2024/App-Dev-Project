@@ -82,6 +82,7 @@ if (lastName.value !== "" &&
     phoneNumber.value !== "" &&
     (maleRadio.checked || femaleRadio.checked || otherRadio.checked) &&
     password1.value !== "" &&
+    password1.value.trim().length >= 8 &&
     password1.value === passwordConfirm.value
 ) {
     // All fields are filled, allow form submission
