@@ -1,4 +1,7 @@
+//form
 const form = document.getElementById('form');
+
+//inputs
 const firstName = document.getElementById('first_name');
 const lastName = document.getElementById('last_name');
 const email = document.getElementById('email');
@@ -6,11 +9,10 @@ const phoneNumber = document.getElementById('phone');
 const maleRadio = document.getElementById('maleRadio')
 const femaleRadio = document.getElementById('femaleRadio')
 const otherRadio = document.getElementById('otherRadio');
-
 const password1 = document.getElementById('password1');
 const passwordConfirm = document.getElementById('confirm_password');
 
-
+//Errors handlers
 const firstError = document.getElementById('first_error');
 const lastError = document.getElementById('last_error');
 const emailError = document.getElementById('email_error');
@@ -23,6 +25,7 @@ const password2Error = document.getElementById('password2_error');
 
 
 form.addEventListener('submit', (e) => {
+    //prevent form submission
       e.preventDefault();
 
       clearErrors();
@@ -62,7 +65,6 @@ else genderError.innerHTML = ""
 
 
 //password validation
-
 if(password1.value.trim() !=="" ){
     password1Error.innerHTML = ""
     if (password1.value.trim().length < 8) {
@@ -76,6 +78,7 @@ if(password1.value.trim() !=="" ){
 }
 else password1Error.innerHTML = "Please enter your password"
 
+//if the fields are not empty allow sumbission
 if (lastName.value !== "" &&
     firstName.value !== "" &&
     email.value !== "" &&
