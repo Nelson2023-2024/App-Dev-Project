@@ -46,10 +46,14 @@
     </style>
 </head>
 <body>
-    <form action="" class="mx-auto border " id="form">
+    <form action="" class="mx-auto border " id="form" method="post">
         
         <div class="container">
+            <?php
+            include('./registration-process.php');
             
+            
+            ?>
             <h1 class="text-center mb-3">Registration</h1>
             <div class="row g-3 mb-3">
                 <!-- first name -->
