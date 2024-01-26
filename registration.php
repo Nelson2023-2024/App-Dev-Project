@@ -58,13 +58,13 @@
             <div class="row g-3 mb-3">
                 <!-- first name -->
                 <div class="col">
-                  <input id="first_name" type="text" class="form-control" placeholder="First name" aria-label="First name">
+                  <input id="first_name" name="fname" type="text" class="form-control" placeholder="First name" aria-label="First name">
                   <span id="first_error"></span>
                 </div>
 
                 <!-- last name -->
                 <div class="col">
-                  <input id="last_name"  type="text" class="form-control" placeholder="Last name" aria-label="Last name">
+                  <input id="last_name" name="lname"  type="text" class="form-control" placeholder="Last name" aria-label="Last name">
                   <span id="last_error"></span>
 
                 </div>
@@ -72,14 +72,14 @@
 
             <!-- email -->
             <div class="col mb-3">
-                <input id="email"  type="text" class="form-control" placeholder="Email" aria-label="Email">
+                <input id="email" name="email"  type="text" class="form-control" placeholder="Email" aria-label="Email">
                 <span id="email_error"></span>
 
             </div>
 
             <!-- phone number -->
             <div class="col mb-3">
-                <input id="phone" type="number" class="form-control" placeholder="Phone number" aria-label="Phone number">
+                <input id="phone" name="phoneNo"  type="number" class="form-control" placeholder="Phone number" aria-label="Phone number">
                 <span id="phone_error"></span>
 
             </div>
@@ -106,7 +106,7 @@
 
                 <div class="col">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gender" id="otherRadio" value="female">
+                        <input class="form-check-input" type="radio" name="gender" id="otherRadio" value="other">
                         <label class="form-check-label" for="otherRadio">
                             others
                         </label>
@@ -117,7 +117,7 @@
 
             <!-- password1 -->
             <div class="col mb-3">
-                <input id="password1" minlength="8"  type="password" class="form-control" placeholder="Password" aria-label="Phone number">
+                <input id="password1" name="pass1"  minlength="8"  type="password" class="form-control" placeholder="Password" aria-label="Phone number">
                 <p>Enter a minimum of 8 characters</p>
                 <span id="password1_error"></span>
                 <i  class="open bi bi-eye-fill" data-target = "password1"></i>
@@ -126,7 +126,7 @@
 
             <!-- password2 -->
             <div class="col mb-3">
-                <input id="confirm_password"  type="password" class="form-control" placeholder="Confirm Password" aria-label="Phone number">
+                <input id="confirm_password" name="pass2" type="password" class="form-control" placeholder="Confirm Password" aria-label="Phone number">
                 <span id="password2_error"></span>
                 <i  class="open bi bi-eye-fill" data-target="confirm_password"></i>
             </div>
