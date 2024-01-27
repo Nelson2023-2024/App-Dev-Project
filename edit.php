@@ -17,6 +17,10 @@
     form {
         max-width: 600px;
     }
+    span{
+        color: red;
+        font-size: 13px;
+    }
     </style>
 </head>
 
@@ -110,30 +114,38 @@ catch (Exception $e){
 ?>
 
             <h1 class="text-center mt-3">Update </h1>
-            <form action="" method="post" class="mx-auto">
+            <form action="" id="form" method="post" class="mx-auto">
 
 
                 <!-- names -->
                 <div class="row mb-2">
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="First name" name="first_name">
+                        <input type="text" id="fname_input" class="form-control" placeholder="First name" name="first_name" >
+                        <span id="fname_error"></span>
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="Last name" name="last_name">
+                        <input type="text" id="lname_input" class="form-control" placeholder="Last name" name="last_name">
+                        <span id="lname_error"></span>
+
                     </div>
+
                 </div>
 
                 <!-- Email -->
                 <div class="row mb-2">
                 <div class="col">
-                        <input type="text" class="form-control" placeholder="Email" name="email">
+                        <input type="text" id="email_input" class="form-control" placeholder="Email" name="email">
+                        <span id="email_error"></span>
+
                     </div>
                 </div>
 
                 <!-- phone number -->
                 <div class="row mb-2">
                 <div class="col">
-                        <input type="text" class="form-control" placeholder="Phone Number" name="phone_number">
+                        <input type="text"id="phone_input"  class="form-control" placeholder="Phone Number" name="phone_number">
+                        <span id="phone_error"></span>
+
                     </div>
                 </div>
 
@@ -168,13 +180,17 @@ catch (Exception $e){
                 <span id="gender_error"></span>
             </div>
 
-            <!-- phone number -->
+            <!-- user level -->
             <div class="row mb-2">
                 <div class="col">
-                        <input type="number" class="form-control" placeholder="User level" name="user_level">
-                    </div>
+                        <input type="number" id="user_level" class="form-control" placeholder="User level" name="user_level">
+                        <span id="userlevel_error"></span>
+                        <p style="color: gray; font-size: 12px;">Note 0(USER) and 1(ADMIN)</p>
+
+                </div>
             </div>
 
+            <!-- submit button -->
             <div class="row mb-2">
                 <div class="col">
                 <button style="width: 100%;" type="sumbit" class="btn btn-success">update</button>
@@ -185,6 +201,7 @@ catch (Exception $e){
             </form>
     </div>
 
+    <script src="./edit.js"></script>
 </body>
 
 </html>
