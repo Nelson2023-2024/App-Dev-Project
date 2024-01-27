@@ -18,10 +18,40 @@
             place-items: center;
             min-height: 100vh;
         }
+        .total-box {
+            max-width: 200px;
+            min-height: 100px;
+            background:linear-gradient(210deg,yellow, purple);
+            padding: 20px;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 10px;
+            
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <?php
+        require('./mysqli_connect.php');
+
+        $display_stmt = mysqli_stmt_init($dbcon);
+        $display_query = "SELECT COUNT(*) AS total FROM users";
+        mysqli_stmt_prepare($display_stmt, $display_query);
+        mysqli_stmt_execute($display_stmt);
+
+        $result = mysqli_stmt_get_result($display_stmt);
+
+        $row = mysqli_fetch_array($result);
+        var_dump($row);
+
+        echo"<div class='total-box mb-3'><h3>Total registered User <br> <h2>$row[total]</h2></h3></div>";
+
+        
+       
+
+        
+        ?>
         <a href="./registration-admin.php" class="btn btn-primary mb-3">+ New Client</a>
         <table class="table">
             <thead class="bg-dark text-light text-center">
@@ -40,7 +70,6 @@
             </thead>
             <tbody class="text-center">
                 <?php
-                require('./mysqli_connect.php');
 
                 // Number of users per page
                 $users_per_page = 4;
