@@ -46,7 +46,7 @@ try{
 
                    }
 
-                   else array_push($errors, "The email you entered did not match ou records");
+                   else array_push($errors, "The email/password you entered did not match ou records");
                 }
 
             }

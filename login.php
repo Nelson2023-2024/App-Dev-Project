@@ -24,6 +24,10 @@
                 font-size: 12px;
                 color:gray;
             }
+
+            #error_login_email, #error_login_password{
+                color: red;
+            }
             
         </style>
     </head>
@@ -32,7 +36,7 @@
         <div class="container">
 
         
-            <form class="mx-auto" method="post" action="">
+            <form id="form-login" class="mx-auto" method="post" action="">
             <?php include('./login-process.php');?>
 
                 <h1 class="text-center mb-4">Login</h1>
@@ -42,6 +46,7 @@
                 <div class="mb-3">
                     <label for="email" class="form-label"> <strong>Email address</strong></label>
                     <input type="email" name="email" class="form-control" id="email" placeholder="wills@gmail.com">
+                    <span id="error_login_email"></span>
                 </div>
     
                 <!-- Password Input -->
@@ -49,6 +54,8 @@
                     <label for="password" class="form-label"><strong>Password</strong></label>
                     <input type="password" name="password" class="form-control" id="password" placeholder="Password">
                     <span>Never share your password with anybody</span>
+                    <span style="display: block;" id="error_login_password"></span>
+
                 </div>
     
                 <!-- Submit Button -->
@@ -59,5 +66,7 @@
 
             </form>
     </div>
+
+    <script src="./login-validation.js"></script>
     </body>
 </html>
