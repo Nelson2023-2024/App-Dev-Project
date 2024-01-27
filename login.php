@@ -33,18 +33,21 @@
 
         
             <form class="mx-auto" method="post" action="">
+            <?php include('./login-process.php');?>
+
                 <h1 class="text-center mb-4">Login</h1>
+
     
                 <!-- Email Input -->
                 <div class="mb-3">
                     <label for="email" class="form-label"> <strong>Email address</strong></label>
-                    <input type="email" class="form-control" id="email" placeholder="wills@gmail.com">
+                    <input type="email" name="email" class="form-control" id="email" placeholder="wills@gmail.com">
                 </div>
     
                 <!-- Password Input -->
                 <div class="mb-3">
                     <label for="password" class="form-label"><strong>Password</strong></label>
-                    <input type="password" class="form-control" id="password" placeholder="Password">
+                    <input type="password" name="password" class="form-control" id="password" placeholder="Password">
                     <span>Never share your password with anybody</span>
                 </div>
     
