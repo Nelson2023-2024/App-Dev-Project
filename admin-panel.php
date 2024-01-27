@@ -66,7 +66,9 @@
                         <td><strong>".($row['user_level'] === '0' ? 'USER' : 'ADMIN')."</strong></td>
                         <td>{$row['registration_date']}</td>
                         <td><a href='edit.php?id={$row['id']}'>Edit</a></td>
-                        <td><a href='delete.php?id={$row['id']}'>Delete</a></td>
+                        <!-- Update the delete link to use a class -->
+<td class='delete-alert'><a href='delete.php?id={$row['id']}'>Delete</a></td>
+
                     </tr>";
                 }
                 ?>
@@ -89,5 +91,7 @@
             ?>
         </div>
     </div>
+
+    <script src="./delete.js"></script>
 </body>
 </html>
