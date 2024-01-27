@@ -54,6 +54,85 @@
 <body>
     <div class="container">
         <form action="" class="mx-auto" method="post">
+            
+        <?php
+            try {
+
+                //connection
+                require("./mysqli_connect.php");
+                //error array
+                $errors = [];
+                if ($_SERVER['REQUEST_METHOD'] === "POST") {
+                    var_dump($_POST);
+                    $first_name = trim($_POST['fname']);
+                    $last_name = trim($_POST['lname']);
+                    $email = trim($_POST['email']);
+                    $phone_no = trim($_POST['phoneNo']);
+                    $gender = trim($_POST['gender']);
+                    $user_level = trim($_POST['user_level']);
+                    $password1 = trim($_POST['pass1']);
+                    $password2 = trim($_POST['pass2']);
+
+                    //first name validation
+                    if(empty($first_name)) array_push($errors, "Please enter the users first name");
+
+                     //last name validation
+                     if(empty($last_name_name)) array_push($errors, "Please enter the users last name");
+
+                      //email validation
+                    if(empty($email)) array_push($errors, "Please enter the users email");
+
+                     //gender name validation
+                     if(empty($gender)) array_push($errors, "Please enter the users gender");
+
+                      //user level validation
+                    if(empty($user_level)) array_push($errors, "Please enter the users level");
+
+                     //user level validation
+                     if($user_level !== 0 || $user_level !==1) array_push($errors, "User level can only be 0(USER) or 1(ADMIN)");
+
+                     //if password1 is  not empty
+                     if(!empty($password1)){
+                        //if both passwords are not equal
+                        if($password1 !== $password2){
+                            array_push($errors, "The two passwords did not match");
+                        }
+
+
+                     }
+                     //if password1 is empty
+                     else{
+                        array_push($errors, "Please enter the users password");
+                     }
+
+
+                     //traverse the array to output errors
+                     foreach($errors as $error){
+                        echo '<div class="alert alert-danger text-center" role="alert"><strong>'.$error.'</strong></div>';
+                     }
+
+                     //if everything is ok
+                     if(empty($errors)){
+
+                     }
+
+
+
+
+
+                }
+            }
+            //database exception
+            catch (mysqli_sql_exception $e) {
+                echo "Database Exception" . $e->getMessage();
+            }
+            //general exception
+            catch (Exception $e) {
+                echo "General Exception" . $e->getMessage();
+            }
+
+
+            ?>
 
             <h1 class="text-center">Add New Client</h1>
             <div class="row g-3 mb-3">
