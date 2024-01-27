@@ -79,7 +79,7 @@
 
             <!-- phone number -->
             <div class="col mb-3">
-                <input id="phone" name="phoneNo"  type="number" class="form-control" placeholder="Phone number" aria-label="Phone number">
+                <input id="phone" name="phoneNo"  type="text" class="form-control" placeholder="Phone number" aria-label="Phone number">
                 <span id="phone_error"></span>
 
             </div>

@@ -22,129 +22,72 @@
 </head>
 <body>
     <div class="container">
-
-    
-<?php
-try{
-    // include connection
-    require('./mysqli_connect.php');
-
-    // $select_user_stmt = mysqli_stmt_init($dbcon);
-    // $select_user_query = "SELECT * FROM users";
-    // mysqli_stmt_prepare($select_user_stmt, $select_user_query);
-    // if(mysqli_stmt_execute($select_user_stmt)){
-    //     $result = mysqli_stmt_get_result($select_user_stmt);
-
-
-    //     echo"<h1 class='text-center'>Registered users</h1>";
-    //     echo '
-        
-    //     <table class="table table-striped">
-    //     <tr>
-    //     <th>ID</th>
-    //     <th>First Name</th>
-    //     <th>Last Name</th>
-    //     <th>Email</th>
-    //     <th>Phone Number</th>
-    //     <th>Gender</th>
-    //     <th>Registration Date</th>
-    //     <th>User Level</th>
-    //     <th>Edit</th>
-    //     <th>Delete</th>
-        
-    //     </tr>
-        
-        
-        
-    //     ';
-
-    //     while($row = mysqli_fetch_assoc($result)){
-    //     echo "
-    //     <tr>
-    //     <td>$row[id]</td>
-    //     <td>$row[first_name]</td>
-    //     <td>$row[last_name]</td>
-    //     <td>$row[email]</td>
-    //     <td>$row[phone_number]</td>
-    //     <td>$row[gender]</td>
-    //     <td>$row[registration_date]</td>
-    //     <td>$row[user_level]</td>
-    //     <td><a href='edit.php?id=".$row['id']."'>Edit</a></td>
-    //     <td><a href='delete.php?id=".$row['id']."'>Delete</a></td>
-        
-        
-        
-    //     </tr>
-            
-    //         ";
-
-    //     }
-
-    //     echo "</table>";
-    // }
-
-    
-
-
-
-
-}
-//database exception
-catch (mysqli_sql_exception $e){
-    echo "Database Exception".$e->getMessage();
-
-}
-//general exception
-catch (Exception $e){
-    echo "General Exception".$e->getMessage();
-}
-    
-?>
-<table class="table">
-  <thead class="bg-dark text-light text-center">
-    <tr>
-      <th scope="col">id</th>
-      <th scope="col">First Name</th>
-      <th scope="col">Last Name</th>
-      <th scope="col">email</th>
-      <th scope="col">Phone Number</th>
-      <th scope="col">Gender</th>
-      <th scope="col">User level</th>
-      <th scope="col">Registration Date</th>
-      <th scope="col">Edit</th>
-      <th scope="col">Delete</th>
-    </tr>
-  </thead>
-  <tbody class="text-center">
-    <?php
-    $select_user_stmt = mysqli_stmt_init($dbcon);
-    $select_user_query = "SELECT * FROM users";
-    mysqli_stmt_prepare($select_user_stmt, $select_user_query);
-    if(mysqli_stmt_execute($select_user_stmt)){
-        $result = mysqli_stmt_get_result($select_user_stmt);
-        while($row = mysqli_fetch_assoc($result)){
-                echo "
+        <table class="table">
+            <thead class="bg-dark text-light text-center">
                 <tr>
-                <td>$row[id]</td>
-                <td>$row[first_name]</td>
-                <td>$row[last_name]</td>
-                <td>$row[email]</td>
-                <td>$row[phone_number]</td>
-                <td>$row[gender]</td>
-                <td> <strong>".($row['user_level'] === 0 ? "USER" :"ADMIN" )."</strong></td>
-                <td>$row[registration_date]</td>
-                <td><a href='edit.php?id=".$row['id']."'>Edit</a></td>
-                <td><a href='delete.php?id=".$row['id']."'>Delete</a></td>
-                
-                
-                
-                </tr>";
-    }
-}
-    ?>
-    
-  </tbody>
-</table>
-</div>
+                    <th scope="col">id</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">email</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">User level</th>
+                    <th scope="col">Registration Date</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                <?php
+                require('./mysqli_connect.php');
+
+                // Number of users per page
+                $users_per_page = 4;
+
+                // Get the current page number from the URL parameter
+                $page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+                // Calculate the starting limit for SQL query
+                $starting_limit = ($page - 1) * $users_per_page;
+
+                // Query to fetch users with pagination
+                $select_query = "SELECT * FROM users LIMIT $starting_limit, $users_per_page";
+                $result = mysqli_query($dbcon, $select_query);
+
+                while($row = mysqli_fetch_assoc($result)){
+                    echo "
+                    <tr>
+                        <td>{$row['id']}</td>
+                        <td>{$row['first_name']}</td>
+                        <td>{$row['last_name']}</td>
+                        <td>{$row['email']}</td>
+                        <td>{$row['phone_number']}</td>
+                        <td>{$row['gender']}</td>
+                        <td><strong>".($row['user_level'] === '0' ? 'USER' : 'ADMIN')."</strong></td>
+                        <td>{$row['registration_date']}</td>
+                        <td><a href='edit.php?id={$row['id']}'>Edit</a></td>
+                        <td><a href='delete.php?id={$row['id']}'>Delete</a></td>
+                    </tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+
+        <!-- Pagination buttons -->
+        <div class="text-center">
+            <?php
+            // Count total number of pages
+            $total_users_query = "SELECT COUNT(*) AS total FROM users";
+            $total_users_result = mysqli_query($dbcon, $total_users_query);
+            $total_users = mysqli_fetch_assoc($total_users_result)['total'];
+            $total_pages = ceil($total_users / $users_per_page);
+
+            // Output pagination buttons
+            for ($btn = 1; $btn <= $total_pages; $btn++) {
+                echo "<a class='btn btn-dark text-light mx-2 mb-3' href='admin-panel.php?page=$btn'>$btn</a>";
+            }
+            ?>
+        </div>
+    </div>
 </body>
 </html>
