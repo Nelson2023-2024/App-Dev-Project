@@ -53,6 +53,7 @@
 
 <body>
     <div class="container">
+    <a style="font-size: 2rem;" href="./admin-panel.php"><i class="bi bi-house"></i>home</a>
         <form action="" class="mx-auto" method="post">
             
         <?php
@@ -63,10 +64,10 @@
                 //error array
                 $errors = [];
                 if ($_SERVER['REQUEST_METHOD'] === "POST") {
-                    var_dump($_POST);
+                    //var_dump($_POST);
                     $first_name = trim($_POST['fname']);
                     $last_name = trim($_POST['lname']);
-                    $email = trim($_POST['email']);
+                    $email =  trim($_POST['email']);
                     $phone_no = trim($_POST['phoneNo']);
                     $gender = trim($_POST['gender']);
                     $user_level = trim($_POST['user_level']);
@@ -77,22 +78,46 @@
                     if(empty($first_name)) array_push($errors, "Please enter the users first name");
 
                      //last name validation
-                     if(empty($last_name_name)) array_push($errors, "Please enter the users last name");
+                     if(empty($last_name)) array_push($errors, "Please enter the users last name");
 
                       //email validation
                     if(empty($email)) array_push($errors, "Please enter the users email");
 
+                    //email format validation
+                    if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+                        array_push($errors, "Invalid email format");
+                    }
+
+                    //duplicate email validation
+                    $select_stmt = mysqli_stmt_init($dbcon);
+                    $select_query = "SELECT email FROM users WHERE email = ?";
+                    mysqli_stmt_prepare($select_stmt, $select_query);
+                    mysqli_stmt_bind_param($select_stmt,'s',$email);
+                    mysqli_stmt_execute($select_stmt);
+                    $result = mysqli_stmt_get_result($select_stmt);
+
+                    $row = mysqli_fetch_assoc($result);
+
+                    //result is found
+                    if($row){
+                        array_push($errors, "Email arleady exists");
+                    }
+
                      //gender name validation
                      if(empty($gender)) array_push($errors, "Please enter the users gender");
 
-                      //user level validation
-                    if(empty($user_level)) array_push($errors, "Please enter the users level");
+                    
 
                      //user level validation
-                     if($user_level !== 0 || $user_level !==1) array_push($errors, "User level can only be 0(USER) or 1(ADMIN)");
+                     if ((int)$user_level !== 0 && (int)$user_level !== 1) {
+                        array_push($errors, "User level can only be 0(USER) or 1(ADMIN)");
+                    }
 
                      //if password1 is  not empty
                      if(!empty($password1)){
+                        if(strlen($password1) <8 ){
+                            array_push($errors, "Password must be at least 8 characters long");
+                        }
                         //if both passwords are not equal
                         if($password1 !== $password2){
                             array_push($errors, "The two passwords did not match");
@@ -113,6 +138,23 @@
 
                      //if everything is ok
                      if(empty($errors)){
+
+                        //hash password
+                        $password_hash = password_hash($password1, PASSWORD_DEFAULT);
+
+                        $insert_stmt = mysqli_stmt_init($dbcon);
+                        $insert_query ="INSERT INTO users (first_name, last_name, email, phone_number, gender, password, user_level) VALUES(?,?,?,?,?,?,?)";
+
+                        mysqli_stmt_prepare($insert_stmt, $insert_query);
+                        mysqli_stmt_bind_param($insert_stmt,'ssssssi',$first_name, $last_name, $email, $phone_no, $gender, $password_hash, $user_level);
+                        mysqli_stmt_execute($insert_stmt);
+
+                        if(mysqli_stmt_affected_rows($insert_stmt) == 1){
+                            echo '<div class="alert alert-success text-center" role="alert"><strong>Registered User sucefully</strong></div>';
+                        }
+                        else{
+                            echo"Failed to register user";
+                        }
 
                      }
 
@@ -204,7 +246,7 @@
             </div>
             <!-- password1 -->
             <div class="col mb-3">
-                <input id="password1" name="pass1" minlength="8" type="password" class="form-control" placeholder="Password" aria-label="Phone number">
+                <input id="password1" name="pass1" type="password" class="form-control" placeholder="Password" aria-label="Phone number">
                 <p>Enter a minimum of 8 characters</p>
                 <span id="password1_error"></span>
                 <i class="open bi bi-eye-fill" data-target="password1"></i>

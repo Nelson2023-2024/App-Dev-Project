@@ -9,7 +9,7 @@ try{
     //if connection fails
     if ($dbcon->connect_error) echo "Connection failed";
     //if connection is succesfull
-    else echo "Connection sucefull";
+    // else echo "Connection sucefull";
 }
 //database exception
 catch (mysqli_sql_exception $e){
