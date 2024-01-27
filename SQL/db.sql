@@ -8,5 +8,6 @@ CREATE TABLE users(
     phone_number VARCHAR(100) NOT NULL,
     gender ENUM('male', 'female', 'other') NOT NULL,
     password VARCHAR(100) NOT NULL
-    registration_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    registration_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    user_level TINYINT(1) UNSIGNED NOT NULL
 )

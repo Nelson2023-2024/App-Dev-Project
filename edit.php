@@ -91,6 +91,7 @@ try{
     }
     //POST METHOD
     if($_SERVER['REQUEST_METHOD'] === "POST"){
+        $id = $_POST['id'];
         $first_name = trim($_POST['first_name']);
         $last_name = trim($_POST['last_name']);
         $email = trim($_POST['email']);
@@ -98,7 +99,25 @@ try{
         $gender = trim($_POST['gender']);
         $user_level = trim($_POST['user_level']);
 
+        var_dump($_POST);
+
         $update_user_stmt = mysqli_stmt_init($dbcon);
+        $update_user_query = "UPDATE users SET first_name = ?, last_name = ?, email=?, phone_number=?, gender=?, user_level=? WHERE id=? ";
+        mysqli_stmt_prepare($update_user_stmt, $update_user_query);
+        // Bind parameters for the update query
+        mysqli_stmt_bind_param($update_user_stmt, 'sssssii', $first_name, $last_name, $email, $phone_number, $gender, $user_level, $id);
+        if(mysqli_stmt_execute($update_user_stmt)){
+            if(mysqli_stmt_affected_rows($update_user_stmt) > 0) {
+                echo "<script>alert('SUCCESSFULLY UPDATED'); window.location.href = 'admin-panel.php';</script>";
+            } else {
+                echo "No rows were affected by the update.";
+            }
+        }
+        else {
+            // Display error message if the update query fails
+            echo "Error updating record: " . mysqli_error($dbcon);
+        }
+        
     }
 }
 
@@ -116,15 +135,18 @@ catch (Exception $e){
             <h1 class="text-center mt-3">Update </h1>
             <form action="" id="form" method="post" class="mx-auto">
 
+            <!-- hidden id field -->
+
+            <input type="hidden" name="id" value="<?php echo $row['id']?>">
 
                 <!-- names -->
                 <div class="row mb-2">
                     <div class="col">
-                        <input type="text" id="fname_input" class="form-control" placeholder="First name" name="first_name" >
+                        <input type="text" id="fname_input" class="form-control" placeholder="First name" name="first_name" value="<?php echo $row['first_name']; ?>" >
                         <span id="fname_error"></span>
                     </div>
                     <div class="col">
-                        <input type="text" id="lname_input" class="form-control" placeholder="Last name" name="last_name">
+                        <input type="text" id="lname_input" class="form-control" placeholder="Last name" name="last_name" value="<?php echo $row['last_name']; ?>">
                         <span id="lname_error"></span>
 
                     </div>
@@ -134,7 +156,7 @@ catch (Exception $e){
                 <!-- Email -->
                 <div class="row mb-2">
                 <div class="col">
-                        <input type="text" id="email_input" class="form-control" placeholder="Email" name="email">
+                        <input type="text" id="email_input" class="form-control" placeholder="Email" name="email" value="<?php echo $row['email']; ?>">
                         <span id="email_error"></span>
 
                     </div>
@@ -143,7 +165,7 @@ catch (Exception $e){
                 <!-- phone number -->
                 <div class="row mb-2">
                 <div class="col">
-                        <input type="text"id="phone_input"  class="form-control" placeholder="Phone Number" name="phone_number">
+                        <input type="text"id="phone_input"  class="form-control" placeholder="Phone Number" name="phone_number" value="<?php echo $row['phone_number']; ?>">
                         <span id="phone_error"></span>
 
                     </div>
@@ -153,7 +175,8 @@ catch (Exception $e){
                 <div class="row mb-3">
                 <div class="col">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gender" id="maleRadio" value="male">
+                        <input class="form-check-input" type="radio" name="gender" id="maleRadio" value="male"
+                        <?php if ($row['gender'] === 'male') echo 'checked'; ?>>
                         <label class="form-check-label" for="maleRadio">
                             Male
                         </label>
@@ -162,7 +185,8 @@ catch (Exception $e){
 
                 <div class="col">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gender" id="femaleRadio" value="female">
+                        <input class="form-check-input" type="radio" name="gender" id="femaleRadio" value="female" 
+                        <?php if ($row['gender'] === 'female') echo 'checked'; ?>>
                         <label class="form-check-label" for="femaleRadio">
                             Female
                         </label>
@@ -171,7 +195,8 @@ catch (Exception $e){
 
                 <div class="col">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gender" id="otherRadio" value="other">
+                        <input class="form-check-input" type="radio" name="gender" id="otherRadio" value="other"
+                        <?php if ($row['gender'] === 'other') echo 'checked'; ?>>
                         <label class="form-check-label" for="otherRadio">
                             others
                         </label>
@@ -183,7 +208,8 @@ catch (Exception $e){
             <!-- user level -->
             <div class="row mb-2">
                 <div class="col">
-                        <input type="number" id="user_level" class="form-control" placeholder="User level" name="user_level">
+                        <input type="number" id="user_level" class="form-control" placeholder="User level" name="user_level" 
+                        value="<?php echo $row['user_level']; ?>">
                         <span id="userlevel_error"></span>
                         <p style="color: gray; font-size: 12px;">Note 0(USER) and 1(ADMIN)</p>
 
@@ -193,7 +219,7 @@ catch (Exception $e){
             <!-- submit button -->
             <div class="row mb-2">
                 <div class="col">
-                <button style="width: 100%;" type="sumbit" class="btn btn-success">update</button>
+                <button style="width: 100%;" type="submit" class="btn btn-success">update</button>
                 </div>
             </div>
 
