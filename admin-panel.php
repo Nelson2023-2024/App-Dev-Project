@@ -22,6 +22,7 @@
 </head>
 <body>
     <div class="container">
+        <a href="./registration-admin.php" class="btn btn-primary mb-3">+ New Client</a>
         <table class="table">
             <thead class="bg-dark text-light text-center">
                 <tr>
