@@ -5,6 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- bootstrap css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- bootstrap icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
         <title>Login</title>
 
         <style>
@@ -45,17 +49,17 @@
                 <!-- Email Input -->
                 <div class="mb-3">
                     <label for="email" class="form-label"> <strong>Email address</strong></label>
-                    <input type="email" name="email" class="form-control" id="email" placeholder="wills@gmail.com">
+                    <input type="email" name="email" class="form-control" id="email" placeholder="wills@gmail.com" value="<?php if(!empty($email)) echo"$email"; ?>">
                     <span id="error_login_email"></span>
                 </div>
     
                 <!-- Password Input -->
-                <div class="mb-3">
+                <div style="position: relative;" class="mb-3">
                     <label for="password" class="form-label"><strong>Password</strong></label>
-                    <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                    <input type="password" name="password" class="form-control" id="password" placeholder="Password" value="<?php if(!empty($password)) echo $password?>">
                     <span>Never share your password with anybody</span>
                     <span style="display: block;" id="error_login_password"></span>
-
+                    <i style="position: absolute; right: 10px; top:40px; cursor: pointer; font-size: 18px;" class="bi bi-eye-fill" id="open"></i>
                 </div>
     
                 <!-- Submit Button -->

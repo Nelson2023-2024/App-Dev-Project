@@ -26,5 +26,20 @@ loginForm.addEventListener('submit', e =>{
 })
 
 
+//eye open 
+const eye = document.getElementById('open');
+eye.addEventListener('click', ()=>{
+    eye.classList.toggle('bi-eye-fill')
+    eye.classList.toggle('bi-eye-slash-fill')
+
+    if(loginPasswordInput.type === 'text' && eye.classList.contains('bi-eye-fill')){
+        loginPasswordInput.type = 'password'
+
+    }
+    else{
+        loginPasswordInput.type = 'text'
+    }
+})
+
 
 
