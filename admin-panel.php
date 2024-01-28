@@ -10,9 +10,18 @@
     <!-- bootstrap icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
+    <!-- titan -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Titan+One&display=swap" rel="stylesheet">
     <title>Admin-panel</title>
 
     <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body{
             display: flex;
             place-items: center;
@@ -28,10 +37,14 @@
             border-radius: 10px;
             
         }
+       
     </style>
 </head>
 <body>
     <div class="container">
+
+    <?php include('./navbar.php')?>
+        
         <?php
         require('./mysqli_connect.php');
 
@@ -53,6 +66,7 @@
         
         ?>
         <a href="./registration-admin.php" class="btn btn-primary mb-3">+ New Client</a>
+        <h1 class="text-center">Manage Users</h1>
         <table class="table">
             <thead class="bg-dark text-light text-center">
                 <tr>

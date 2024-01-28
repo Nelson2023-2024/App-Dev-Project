@@ -53,7 +53,7 @@
 
 <body>
     <div class="container">
-    <a style="font-size: 2rem;" href="./admin-panel.php"><i class="bi bi-house"></i>home</a>
+        <?php include("./navbar.php")?>
         <form action="" class="mx-auto" method="post">
             
         <?php
