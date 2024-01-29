@@ -1,11 +1,43 @@
 <?php
-session_start();
-var_dump($_SESSION);
+try{
+    session_start();
+    var_dump($_SESSION);
+    
+    if($_SESSION["user_level"] !== 0 || !isset($_SESSION["user_level"]) ){
+        header("Location: login.php");
+    
+    }
+    //if user level is found
+    else{
+        require("./mysqli_connect.php");
+        $id = $_SESSION['id'];
 
-if($_SESSION["user_level"] !== 0 || !isset($_SESSION["user_level"]) ){
-    header("Location: login.php");
+        $select_stmt = mysqli_stmt_init($dbcon);
+        $select_query = "SELECT * FROM users WHERE id = ?";
+        mysqli_stmt_prepare($select_stmt, $select_query);
+        mysqli_stmt_bind_param($select_stmt, 'i', $id);
+        mysqli_stmt_execute($select_stmt);
+
+        $result = mysqli_stmt_get_result($select_stmt);
+
+        $row = mysqli_fetch_assoc($result);
+    }
+    
+    
 
 }
+//database exception
+catch (mysqli_sql_exception $e){
+    echo "Database Exception".$e->getMessage();
+
+}
+//general exception
+catch (Exception $e){
+    echo "General Exception".$e->getMessage();
+}
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,6 +79,9 @@ if($_SESSION["user_level"] !== 0 || !isset($_SESSION["user_level"]) ){
 
             </ul>
         </nav>
+        <?php 
+        echo"<h1 style='color:red; text-align:center;'>Welcome $row[first_name] $row[last_name]</h1>";
+        ?>
         <div class="main-content">
             <div class="text">
                 <h1>Coding is <span style="color: #fff724;" class="auto-type">easy</span>
