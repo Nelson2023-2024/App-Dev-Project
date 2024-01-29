@@ -1,3 +1,12 @@
+<?php
+session_start();
+var_dump($_SESSION);
+
+if($_SESSION["user_level"] !== 1 || !isset($_SESSION["user_level"]) ){
+    header("Location: login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,7 +50,7 @@
     </style>
 </head>
 <body>
-    <div style=" " class="container-fluid mx-auto">
+    <div  class="container-fluid mx-auto">
     <?php include('./navbar.php')?>
 
     </div>
