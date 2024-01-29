@@ -1,7 +1,7 @@
 <?php
 try{
     session_start();
-    var_dump($_SESSION);
+   // var_dump($_SESSION);
     
     if($_SESSION["user_level"] !== 0 || !isset($_SESSION["user_level"]) ){
         header("Location: login.php");
@@ -53,18 +53,25 @@ catch (Exception $e){
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
         integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 
 
 <style>
-    .username h1{
-        background: linear-gradient(red, white);
-        background-clip: text;
-        color: transparent;
-        text-align: center;
-        font-size: 3rem;
-        margin-top: 5rem;
-    }
+.username h1 {
+    background: linear-gradient(red, white);
+    background-clip: text;
+    color: transparent;
+    text-align: center;
+    font-size: 3rem;
+    margin-top: 5rem;
+}
+
+.profile {
+    color: red;
+    font-size: 2rem;
+    cursor: pointer;
+}
 </style>
 
 <body>
@@ -87,16 +94,18 @@ catch (Exception $e){
                 <li><a href="./pricing.html">Pricing</a></li>
                 <li><a href="./contact.html">Contact</a></li>
                 <li><a href="./logout.php">Logout</a></li>
-
-
             </ul>
+
+            <div style="margin-right: 4rem;" class="profile">
+                <a href="./updateuser.php"><i class="fa-solid fa-user"></i></a>
+            </div>
         </nav>
         <div class="username">
-        <?php 
+            <?php 
         echo"<h1>Welcome $row[first_name] $row[last_name]</h1>";
         ?>
         </div>
-        
+
         <div class="main-content">
             <div class="text">
                 <h1>Coding is <span style="color: #fff724;" class="auto-type">easy</span>
