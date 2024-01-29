@@ -64,9 +64,9 @@
         <!-- navlinks -->
         <ul>
             <li><a href="./admin-panel.php"><i class="bi bi-pen-fill"></i> Manage users</a></li>
-            <li><a href="./admin-panel.php"><i class="bi bi-search"></i> Seach users</a></li>
-            <li><a href="./admin-panel.php"><i class="bi bi-plus-circle"></i>Add New users</a></li>
-            <li><a href=""><i class="bi bi-box-arrow-left"></i>Log Out</a></li>
+            <li><a href="./search.php"><i class="bi bi-search"></i> Seach users</a></li>
+            <li><a href="./registration-admin.php"><i class="bi bi-plus-circle"></i>Add New users</a></li>
+            <li><a href="./logout.php"><i class="bi bi-box-arrow-left"></i>Log Out</a></li>
         </ul>
         </nav>
 </body>

@@ -42,8 +42,15 @@ try{
                    $password_verify = password_verify($password, $row['password']);
 
                    if($password_verify){
-                    header("Location: mysqli_connect.php");
+                    session_start();
 
+                    $_SESSION['id'] = $row['id'];
+                    $_SESSION['user_level'] = $row['user_level'];
+
+                    $_SESSION['user_level'] === 0 
+                    ?header("Location: memberspage.php")
+                    :header("Location: admin-panel.php");
+                    exit();
                    }
 
                    else array_push($errors, "The email/password you entered did not match ou records");
