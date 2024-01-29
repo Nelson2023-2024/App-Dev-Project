@@ -42,6 +42,7 @@ if($_SESSION["user_level"] !== 0 || !isset($_SESSION["user_level"]) ){
                 <li><a href="./index.html">Home</a></li>
                 <li><a href="./pricing.html">Pricing</a></li>
                 <li><a href="./contact.html">Contact</a></li>
+                <li><a href="./logout.php">Logout</a></li>
 
 
             </ul>
