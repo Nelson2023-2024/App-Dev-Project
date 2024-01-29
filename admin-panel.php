@@ -4,9 +4,24 @@ session_start();
 
 if($_SESSION["user_level"] !== 1 || !isset($_SESSION["user_level"]) ){
     header("Location: login.php");
-    exit();
-}
 
+}
+//if user level is found
+else{
+    require("./mysqli_connect.php");
+
+    $id = $_SESSION['id'];
+
+    $select_stmt = mysqli_stmt_init($dbcon);
+    $select_query = "SELECT * FROM users WHERE id = ?";
+    mysqli_stmt_prepare($select_stmt, $select_query);
+    mysqli_stmt_bind_param($select_stmt, 'i', $id);
+    mysqli_stmt_execute($select_stmt);
+
+    $result = mysqli_stmt_get_result($select_stmt);
+
+    $row = mysqli_fetch_assoc($result);
+}
 ?>
 
 <!DOCTYPE html>
@@ -37,6 +52,14 @@ if($_SESSION["user_level"] !== 1 || !isset($_SESSION["user_level"]) ){
             border-radius: 10px;
             
         }
+        .username h1{
+        background: linear-gradient(red, blue);
+        background-clip: text;
+        color: transparent;
+        text-align: center;
+        font-size: 3rem;
+        margin-top: 5rem;
+    }
        
     </style>
 </head>
@@ -44,9 +67,14 @@ if($_SESSION["user_level"] !== 1 || !isset($_SESSION["user_level"]) ){
     <div class="container">
 
     <?php include('./navbar.php')?>
+    <div class="username">
+    <?php
+    echo"<h1> Welcome $row[first_name] $row[last_name]</h1>";
+    ?>
+    </div>
+    
         
         <?php
-        require('./mysqli_connect.php');
 
         $display_stmt = mysqli_stmt_init($dbcon);
         $display_query = "SELECT COUNT(*) AS total FROM users";

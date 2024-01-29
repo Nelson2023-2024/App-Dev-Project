@@ -55,6 +55,18 @@ catch (Exception $e){
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
+
+<style>
+    .username h1{
+        background: linear-gradient(red, white);
+        background-clip: text;
+        color: transparent;
+        text-align: center;
+        font-size: 3rem;
+        margin-top: 5rem;
+    }
+</style>
+
 <body>
 
     <section class="home-main">
@@ -79,9 +91,12 @@ catch (Exception $e){
 
             </ul>
         </nav>
+        <div class="username">
         <?php 
-        echo"<h1 style='color:red; text-align:center;'>Welcome $row[first_name] $row[last_name]</h1>";
+        echo"<h1>Welcome $row[first_name] $row[last_name]</h1>";
         ?>
+        </div>
+        
         <div class="main-content">
             <div class="text">
                 <h1>Coding is <span style="color: #fff724;" class="auto-type">easy</span>
