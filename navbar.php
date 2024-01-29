@@ -66,6 +66,7 @@
             <li><a href="./admin-panel.php"><i class="bi bi-pen-fill"></i> Manage users</a></li>
             <li><a href="./admin-panel.php"><i class="bi bi-search"></i> Seach users</a></li>
             <li><a href="./admin-panel.php"><i class="bi bi-plus-circle"></i>Add New users</a></li>
+            <li><a href=""><i class="bi bi-box-arrow-left"></i>Log Out</a></li>
         </ul>
         </nav>
 </body>
