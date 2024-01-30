@@ -1,11 +1,29 @@
 <?php
 try{
+    //connection
+    require('./mysqli_connect.php');
+
     session_start();
     var_dump($_SESSION);
     
-    if($_SESSION['user_level'] !==0 || !isset($_SESSION['user_level'])){
+    if($_SESSION['user_level'] !== 0 || !isset($_SESSION['user_level'])){
         header("Location: location.php");
         exit();
+    }
+    //if user level is == 0
+    else{
+        $id = $_SESSION['id'];
+
+        $select_stmt = mysqli_stmt_init($dbcon);
+        $select_query = "SELECT * FROM users WHERE id = ?";
+        mysqli_stmt_prepare($select_stmt, $select_query);
+        mysqli_stmt_bind_param($select_stmt, 'i', $id);
+        mysqli_stmt_execute($select_stmt);
+
+        $result = mysqli_stmt_get_result($select_stmt);
+
+        $row = mysqli_fetch_assoc($result);
+        var_dump($row);
     }
 }
 //database exception
@@ -63,6 +81,7 @@ catch (Exception $e){
 
 <body>
     <div class="container">
+        
         <form action="" class="mx-auto">
             <h1 class="text-center">Update Your Profile</h1>
             <!-- Name -->
