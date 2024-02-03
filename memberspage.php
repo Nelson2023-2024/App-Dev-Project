@@ -87,18 +87,18 @@ catch (Exception $e){
             <div class="menu-container">
                 <i class="fa fa-bars" aria-hidden="true"></i>
             </div>
-            <ul id="nav-links-container">
+            <ul id="nav-links-container" style="align-items: center;" >
 
                 <i class="fa fa-times" aria-hidden="true"></i>
                 <li><a href="./index.html">Home</a></li>
                 <li><a href="./pricing.html">Pricing</a></li>
                 <li><a href="./contact.html">Contact</a></li>
-                <li><a href="./logout.php">Logout</a></li>
+                <li style="background: red; padding:1rem ; border-radius:10px;"><a href="./logout.php">Logout</a></li>
             </ul>
 
-            <div style="margin-right: 4rem;" class="profile">
+            <!-- <div style="margin-right: 4rem;" class="profile">
                 <a href="./updateuser.php"><i class="fa-solid fa-user"></i></a>
-            </div>
+            </div> -->
         </nav>
         <div class="username">
             <?php 

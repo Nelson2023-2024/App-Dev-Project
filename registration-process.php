@@ -30,6 +30,9 @@ try{
         $result = mysqli_stmt_get_result($duplicate_email_stmt);
         $row = mysqli_fetch_assoc($result);
 
+
+
+        
         if($row){
             array_push($errors, "Email Already Exists");
         }
@@ -54,6 +57,8 @@ try{
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 ';
+
+                header("Location: login.php");
             }
         }
     }

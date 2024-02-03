@@ -67,13 +67,12 @@ else{
     <div class="container">
 
     <?php include('./navbar.php')?>
+    
     <div class="username">
     <?php
     echo"<h1> Welcome $row[first_name] $row[last_name]</h1>";
     ?>
     </div>
-    
-        
         <?php
 
         $display_stmt = mysqli_stmt_init($dbcon);
@@ -88,10 +87,6 @@ else{
 
         echo"<div class='total-box mb-3'><h3>Total registered User <br> <h2>$row[total]</h2></h3></div>";
 
-        
-       
-
-        
         ?>
         <a href="./registration-admin.php" class="btn btn-primary mb-3">+ New Client</a>
         <h1 class="text-center">Manage Users</h1>
@@ -139,8 +134,7 @@ else{
                         <td>{$row['registration_date']}</td>
                         <td><a href='edit.php?id={$row['id']}'>Edit</a></td>
                         <!-- Update the delete link to use a class -->
-<td class='delete-alert'><a href='delete.php?id={$row['id']}'>Delete</a></td>
-
+                        <td class='delete-alert'><a href='delete.php?id={$row['id']}'>Delete</a></td>
                     </tr>";
                 }
                 ?>
@@ -163,7 +157,6 @@ else{
             ?>
         </div>
     </div>
-
     <script src="./delete.js"></script>
 </body>
 </html>

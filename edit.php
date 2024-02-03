@@ -5,6 +5,8 @@ session_start();
 if($_SESSION["user_level"] !== 1 || !isset($_SESSION["user_level"]) ){
     header("Location: login.php");
     exit();
+
+
 }
 
 ?>
@@ -133,7 +135,6 @@ try{
             // Display error message if the update query fails
             echo "Error updating record: " . mysqli_error($dbcon);
         }
-        
     }
 }
 

@@ -1,11 +1,10 @@
 <?php
 session_start();
-var_dump($_SESSION);
+//var_dump($_SESSION);
 
-if($_SESSION["user_level"] !== 1 || !isset($_SESSION["user_level"]) ){
+if ($_SESSION["user_level"] !== 1 || !isset($_SESSION["user_level"])) {
     header("Location: login.php");
     exit();
-
 }
 ?>
 <!DOCTYPE html>
@@ -62,11 +61,11 @@ if($_SESSION["user_level"] !== 1 || !isset($_SESSION["user_level"]) ){
 </head>
 
 <body>
-    <div class="container">
-        <?php include("./navbar.php")?>
+    <div class="container mt-5">
+        <?php include("./navbar.php") ?>
         <form action="" class="mx-auto" method="post">
-            
-        <?php
+
+            <?php
             try {
 
                 //connection
@@ -85,16 +84,16 @@ if($_SESSION["user_level"] !== 1 || !isset($_SESSION["user_level"]) ){
                     $password2 = trim($_POST['pass2']);
 
                     //first name validation
-                    if(empty($first_name)) array_push($errors, "Please enter the users first name");
+                    if (empty($first_name)) array_push($errors, "Please enter the users first name");
 
-                     //last name validation
-                     if(empty($last_name)) array_push($errors, "Please enter the users last name");
+                    //last name validation
+                    if (empty($last_name)) array_push($errors, "Please enter the users last name");
 
-                      //email validation
-                    if(empty($email)) array_push($errors, "Please enter the users email");
+                    //email validation
+                    if (empty($email)) array_push($errors, "Please enter the users email");
 
                     //email format validation
-                    if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+                    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                         array_push($errors, "Invalid email format");
                     }
 
@@ -102,76 +101,67 @@ if($_SESSION["user_level"] !== 1 || !isset($_SESSION["user_level"]) ){
                     $select_stmt = mysqli_stmt_init($dbcon);
                     $select_query = "SELECT email FROM users WHERE email = ?";
                     mysqli_stmt_prepare($select_stmt, $select_query);
-                    mysqli_stmt_bind_param($select_stmt,'s',$email);
+                    mysqli_stmt_bind_param($select_stmt, 's', $email);
                     mysqli_stmt_execute($select_stmt);
                     $result = mysqli_stmt_get_result($select_stmt);
 
                     $row = mysqli_fetch_assoc($result);
 
                     //result is found
-                    if($row){
+                    if ($row) {
                         array_push($errors, "Email arleady exists");
                     }
 
-                     //gender name validation
-                     if(empty($gender)) array_push($errors, "Please enter the users gender");
+                    //gender name validation
+                    if (empty($gender)) array_push($errors, "Please enter the users gender");
 
-                    
 
-                     //user level validation
-                     if ((int)$user_level !== 0 && (int)$user_level !== 1) {
+
+                    //user level validation
+                    if ((int)$user_level !== 0 && (int)$user_level !== 1) {
                         array_push($errors, "User level can only be 0(USER) or 1(ADMIN)");
                     }
 
-                     //if password1 is  not empty
-                     if(!empty($password1)){
-                        if(strlen($password1) <8 ){
+                    //if password1 is  not empty
+                    if (!empty($password1)) {
+                        if (strlen($password1) < 8) {
                             array_push($errors, "Password must be at least 8 characters long");
                         }
                         //if both passwords are not equal
-                        if($password1 !== $password2){
+                        if ($password1 !== $password2) {
                             array_push($errors, "The two passwords did not match");
                         }
-
-
-                     }
-                     //if password1 is empty
-                     else{
+                    }
+                    //if password1 is empty
+                    else {
                         array_push($errors, "Please enter the users password");
-                     }
+                    }
 
 
-                     //traverse the array to output errors
-                     foreach($errors as $error){
-                        echo '<div class="alert alert-danger text-center" role="alert"><strong>'.$error.'</strong></div>';
-                     }
+                    //traverse the array to output errors
+                    foreach ($errors as $error) {
+                        echo '<div style="height:40px; display: flex; align-items:center; justify-content:center;" class="alert alert-danger text-center " role="alert"><strong>' . $error . '</strong></div>';
+                    }
 
-                     //if everything is ok
-                     if(empty($errors)){
+                    //if everything is ok
+                    if (empty($errors)) {
 
                         //hash password
                         $password_hash = password_hash($password1, PASSWORD_DEFAULT);
 
                         $insert_stmt = mysqli_stmt_init($dbcon);
-                        $insert_query ="INSERT INTO users (first_name, last_name, email, phone_number, gender, password, user_level) VALUES(?,?,?,?,?,?,?)";
+                        $insert_query = "INSERT INTO users (first_name, last_name, email, phone_number, gender, password, user_level) VALUES(?,?,?,?,?,?,?)";
 
                         mysqli_stmt_prepare($insert_stmt, $insert_query);
-                        mysqli_stmt_bind_param($insert_stmt,'ssssssi',$first_name, $last_name, $email, $phone_no, $gender, $password_hash, $user_level);
+                        mysqli_stmt_bind_param($insert_stmt, 'ssssssi', $first_name, $last_name, $email, $phone_no, $gender, $password_hash, $user_level);
                         mysqli_stmt_execute($insert_stmt);
 
-                        if(mysqli_stmt_affected_rows($insert_stmt) == 1){
+                        if (mysqli_stmt_affected_rows($insert_stmt) == 1) {
                             echo '<div class="alert alert-success text-center" role="alert"><strong>Registered User sucefully</strong></div>';
+                        } else {
+                            echo "Failed to register user";
                         }
-                        else{
-                            echo"Failed to register user";
-                        }
-
-                     }
-
-
-
-
-
+                    }
                 }
             }
             //database exception
@@ -190,13 +180,13 @@ if($_SESSION["user_level"] !== 1 || !isset($_SESSION["user_level"]) ){
             <div class="row g-3 mb-3">
                 <!-- first name -->
                 <div class="col">
-                    <input id="first_name" name="fname" type="text" class="form-control" placeholder="First name" aria-label="First name">
+                    <input id="first_name" name="fname" type="text" class="form-control" placeholder="First name" aria-label="First name" value="<?= isset($first_name) ? $first_name : "" ?>">
                     <span id="first_error"></span>
                 </div>
 
                 <!-- last name -->
                 <div class="col">
-                    <input id="last_name" name="lname" type="text" class="form-control" placeholder="Last name" aria-label="Last name">
+                    <input id="last_name" name="lname" type="text" class="form-control" placeholder="Last name" aria-label="Last name" value="<?= isset($last_name) ? $last_name : "" ?>">
                     <span id="last_error"></span>
 
                 </div>
@@ -204,14 +194,14 @@ if($_SESSION["user_level"] !== 1 || !isset($_SESSION["user_level"]) ){
 
             <!-- email -->
             <div class="col mb-3">
-                <input id="email" name="email" type="text" class="form-control" placeholder="Email" aria-label="Email">
+                <input id="email" name="email" type="text" class="form-control" placeholder="Email" aria-label="Email" value="<?= isset($email) ? $email : "" ?>">
                 <span id="email_error"></span>
 
             </div>
 
             <!-- phone number -->
             <div class="col mb-3">
-                <input id="phone" name="phoneNo" type="text" class="form-control" placeholder="Phone number" aria-label="Phone number">
+                <input id="phone" name="phoneNo" type="text" class="form-control" placeholder="Phone number" aria-label="Phone number" value="<?= isset($phone_no) ? $phone_no : "" ?>">
                 <span id="phone_error"></span>
 
             </div>
@@ -220,7 +210,7 @@ if($_SESSION["user_level"] !== 1 || !isset($_SESSION["user_level"]) ){
             <div class="row mb-3">
                 <div class="col">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gender" id="maleRadio" value="male">
+                        <input class="form-check-input" type="radio" name="gender" id="maleRadio" value="male" <?= isset($gender) && $gender === "male" ? "checked" : "" ?>>
                         <label class="form-check-label" for="maleRadio">
                             Male
                         </label>
@@ -229,7 +219,7 @@ if($_SESSION["user_level"] !== 1 || !isset($_SESSION["user_level"]) ){
 
                 <div class="col">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gender" id="femaleRadio" value="female">
+                        <input class="form-check-input" type="radio" name="gender" id="femaleRadio" value="female" <?= isset($gender) && $gender === "female" ? "checked" : "" ?>>
                         <label class="form-check-label" for="femaleRadio">
                             Female
                         </label>
@@ -238,34 +228,35 @@ if($_SESSION["user_level"] !== 1 || !isset($_SESSION["user_level"]) ){
 
                 <div class="col">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gender" id="otherRadio" value="other">
+                        <input class="form-check-input" type="radio" name="gender" id="otherRadio" value="other" <?= isset($gender) && $gender === "other" ? "checked" : "" ?>>
                         <label class="form-check-label" for="otherRadio">
-                            others
+                            Others
                         </label>
                     </div>
                 </div>
                 <span id="gender_error"></span>
             </div>
 
+
             <!-- user level -->
             <div class="col mb-3">
-                <input id="userlevel" name="user_level" type="number" class="form-control" placeholder="User level" aria-label="Phone number">
+                <input id="userlevel" name="user_level" type="number" class="form-control" placeholder="User level" aria-label="Phone number" value="<?=isset($user_level) ? $user_level : ""?>">
                 <span id="userlevel_error"></span>
                 <p>Note: 0(USER) and 1(ADMIN)</p>
 
             </div>
             <!-- password1 -->
             <div class="col mb-3">
-                <input id="password1" name="pass1" type="password" class="form-control" placeholder="Password" aria-label="Phone number">
+                <input id="password1" name="pass1" type="password" class="form-control" placeholder="Password" aria-label="Phone number" value="<?= isset($password1) ? $password1 : ""?>">
                 <p>Enter a minimum of 8 characters</p>
                 <span id="password1_error"></span>
                 <i class="open bi bi-eye-fill" data-target="password1"></i>
 
-            </div>
+            </div> 
 
             <!-- password2 -->
             <div class="col mb-3">
-                <input id="confirm_password" name="pass2" type="password" class="form-control" placeholder="Confirm Password" aria-label="Phone number">
+                <input id="confirm_password" name="pass2" type="password" class="form-control" placeholder="Confirm Password" aria-label="Phone number" value="<?= isset($password2) ? $password2 : "" ?>">
                 <span id="password2_error"></span>
                 <i class="open bi bi-eye-fill" data-target="confirm_password"></i>
             </div>
@@ -276,7 +267,7 @@ if($_SESSION["user_level"] !== 1 || !isset($_SESSION["user_level"]) ){
         </form>
     </div>
 
-    <script src="./validation.js"></script>
+    <script src="./registration-admin.js"></script>
 </body>
 
 </html>
