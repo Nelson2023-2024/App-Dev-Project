@@ -20,6 +20,11 @@
             justify-content: center;
             align-items: center;
         }
+
+        span{
+            color: red;
+            font-size: 13px;
+        }
     </style>
     <title>Document</title>
 </head>
@@ -29,24 +34,33 @@
         <form action="" class="mx-auto border  py-5 px-2" style="width: 600px;">
             <h1 class="text-center">Add New Product FrontEnd</h1>
 
-            <div class="row g-3 mb-3">
+            <div class="row g-3 mb-2">
                 <div class="">
-                    <input type="text" class="form-control" placeholder="Title" aria-label="First name">
+                    <input type="text" class="form-control" placeholder="Product Title" id="product-title">
+
+                    <span id="product-title-error"></span>
                 </div>
+
             </div>
 
-            <div class="input-group mb-3">
-                <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+            <div class=" mb-2" >
+                <input type="file" class="form-control" id="product-image" >
+                <span id="product-image-error"></span>
+                
             </div>
 
-            <div class="row g-3 mb-3">
+            <div class="row g-3 mb-2">
                 <div class="">
-                    <input type="text" class="form-control" placeholder="Price" aria-label="First name">
+                    <input type="text" class="form-control" placeholder="Price" id="product-price" >
+                    <span id="product-price-error"></span>
+
                 </div>
             </div>
 
             <div class=" mb-3">
-                <textarea style="width: 100%;" class="form-control" name="" id="" cols="10" rows="5" placeholder=" Description"></textarea>
+                <textarea style="width: 100%;" class="form-control" name="" id="product-description" cols="10" rows="5" placeholder=" Description"></textarea>
+                <span id="product-description-error"></span>
+
             </div>
 
             <button style="width: 100%; height: 40px;" class="btn btn-primary">Add New Product</button>
@@ -55,7 +69,7 @@
     </div>
 
 
-    <script src=""></script>
+    <script src="add-product.js"></script>
 </body>
 
 </html>
