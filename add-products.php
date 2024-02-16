@@ -31,13 +31,12 @@
 
 <body>
     <div class="container">
-        <form action="" class="mx-auto border  py-5 px-2" style="width: 600px;">
+        <form action="" class="mx-auto border  py-5 px-2" style="width: 600px;" id="form">
             <h1 class="text-center">Add New Product FrontEnd</h1>
 
             <div class="row g-3 mb-2">
                 <div class="">
                     <input type="text" class="form-control" placeholder="Product Title" id="product-title">
-
                     <span id="product-title-error"></span>
                 </div>
 
