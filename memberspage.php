@@ -91,7 +91,7 @@ catch (Exception $e){
 
                 <i class="fa fa-times" aria-hidden="true"></i>
                 <li><a href="./index.html">Home</a></li>
-                <li><a href="./pricing.html">Pricing</a></li>
+                <li><a href="./pricing.php">Pricing</a></li>
                 <li><a href="./contact.html">Contact</a></li>
                 <li style="background: red; padding:1rem ; border-radius:10px;"><a href="./logout.php">Logout</a></li>
             </ul>
