@@ -34,8 +34,10 @@
     <div class="container" style="margin-top: 400px;">
 
         <?php
+        require('./mysqli_connect.php');
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
+            $errors = [];
 
             $product_title = $_POST['product-title'];
             $product_image = $_FILES['product-image']['name'];
@@ -55,6 +57,21 @@
             echo "<pre>";
             var_dump($_FILES);
             echo "</pre>";
+
+
+            if(!empty($product_title) || !empty($product_image) || !empty($product_price) || !empty($product_description)){
+
+                $insert_stmt = mysqli_stmt_init($dbcon);
+                $insert_query = "INSERT INTO categories (product_title, product_image, product_price, product_description) VALUES(?,?,?,?)" ;
+                mysqli_stmt_prepare($insert_stmt, $insert_query);
+                mysqli_stmt_bind_param($insert_stmt,'ssss', $product_title, $product_image, $product_price, $product_description);
+
+                $result = mysqli_stmt_execute($insert_stmt);
+
+            }
+            else{
+                array_push($errors, "All fields are required");
+            }
         } else {
             echo "GET";
         }
