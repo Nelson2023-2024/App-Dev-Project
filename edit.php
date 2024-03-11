@@ -27,6 +27,8 @@ if($_SESSION["user_level"] !== 1 || !isset($_SESSION["user_level"]) ){
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Titan+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./bootstrap-5.0.2-dist/css/bootstrap.min.css">
+
     <title>Edit</title>
 
     <style>

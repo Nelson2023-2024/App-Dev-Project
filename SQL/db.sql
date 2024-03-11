@@ -11,3 +11,12 @@ CREATE TABLE users(
     registration_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     user_level TINYINT(1) UNSIGNED NOT NULL
 );
+
+CREATE TABLE categories(
+    id MEDIUMINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    product_title VARCHAR(100) NOT NULL,
+    product_image VARCHAR(100) NOT NULL,
+    product_price VARCHAR(100) NOT NULL,
+    product_description TEXT NOT NULL,    
+    registration_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+);
