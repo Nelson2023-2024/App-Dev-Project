@@ -64,7 +64,7 @@
                 $insert_stmt = mysqli_stmt_init($dbcon);
                 $insert_query = "INSERT INTO categories (product_title, product_image, product_price, product_description) VALUES(?,?,?,?)" ;
                 mysqli_stmt_prepare($insert_stmt, $insert_query);
-                mysqli_stmt_bind_param($insert_stmt,'ssss', $product_title, $product_image, $product_price, $product_description);
+                mysqli_stmt_bind_param($insert_stmt,'ssss', $product_title, $new_filename, $product_price, $product_description);
 
                 $result = mysqli_stmt_execute($insert_stmt);
 
