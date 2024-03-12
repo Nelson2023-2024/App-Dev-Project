@@ -31,7 +31,9 @@
 </head>
 
 <body>
-    <div class="container" style="margin-top: 400px;">
+    <div class="container" style="margin-top: 130px;">
+    
+    <?php include("./navbar.php")?>
 
         <?php
         require('./mysqli_connect.php');
@@ -78,6 +80,7 @@
 
 
         ?>
+
         <form action="" method="POST" class="mx-auto border  py-5 px-2" style="width: 600px;" id="form" enctype="multipart/form-data">
             <h1 class="text-center">Add New Product FrontEnd</h1>
 
