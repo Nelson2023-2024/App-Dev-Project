@@ -2,12 +2,11 @@
 session_start();
 //var_dump($_SESSION);
 
-if($_SESSION["user_level"] !== 1 || !isset($_SESSION["user_level"]) ){
+if ($_SESSION["user_level"] !== 1 || !isset($_SESSION["user_level"])) {
     header("Location: login.php");
-
 }
 //if user level is found
-else{
+else {
     require("./mysqli_connect.php");
 
     $id = $_SESSION['id'];
@@ -26,6 +25,7 @@ else{
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,49 +34,56 @@ else{
     <title>Admin-panel</title>
 
     <style>
-        *{
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        body{
+
+        body {
             display: flex;
             place-items: center;
             min-height: 100vh;
         }
+
         .total-box {
             max-width: 200px;
             min-height: 100px;
-            background:linear-gradient(210deg,yellow, purple);
+            background: linear-gradient(210deg, yellow, purple);
             padding: 20px;
             text-align: center;
             font-weight: bold;
             border-radius: 10px;
-            
+
         }
-        .username h1{
-        background: linear-gradient(red, blue);
-        background-clip: text;
-        color: transparent;
-        text-align: center;
-        font-size: 3rem;
-        margin-top: 5rem;
-    }
-       
+
+        .username h1 {
+            background: linear-gradient(red, blue);
+            background-clip: text;
+            color: transparent;
+            text-align: center;
+            font-size: 3rem;
+            margin-top: 5rem;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
 
-    <?php include('./navbar.php')?>
-    
-    <div class="username">
-    <?php
-    echo"<h1> Welcome $row[first_name] $row[last_name]</h1>";
-    ?>
-    </div>
-        
+        <?php include('./navbar.php') ?>
+
+        <div class="username">
+            <?php
+            echo "<h1> Welcome $row[first_name] $row[last_name]</h1>";
+            ?>
+        </div>
+
         <a href="./registration-admin.php" class="btn btn-primary mb-3">+ New Client</a>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            + New Client
+        </button>
         <h1 class="text-center">Manage Users</h1>
         <table class="table">
             <thead class="bg-dark text-light text-center">
@@ -109,7 +116,7 @@ else{
                 $select_query = "SELECT * FROM users LIMIT $starting_limit, $users_per_page";
                 $result = mysqli_query($dbcon, $select_query);
 
-                while($row = mysqli_fetch_assoc($result)){
+                while ($row = mysqli_fetch_assoc($result)) {
                     echo "
                     <tr>
                         <td>{$row['id']}</td>
@@ -118,7 +125,7 @@ else{
                         <td>{$row['email']}</td>
                         <td>{$row['phone_number']}</td>
                         <td>{$row['gender']}</td>
-                        <td><strong>".($row['user_level'] === '0' ? 'USER' : 'ADMIN')."</strong></td>
+                        <td><strong>" . ($row['user_level'] === '0' ? 'USER' : 'ADMIN') . "</strong></td>
                         <td>{$row['registration_date']}</td>
                         <td><a href='edit.php?id={$row['id']}'>Edit</a></td>
                         <!-- Update the delete link to use a class -->
@@ -144,7 +151,125 @@ else{
             }
             ?>
         </div>
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add New User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" class="mx-auto" method="post">
+                            <div class="row g-3 mb-3">
+                                <!-- first name -->
+                                <div class="col">
+                                    <input id="first_name" name="fname" type="text" class="form-control" placeholder="First name" aria-label="First name" value="<?= isset($first_name) ? $first_name : "" ?>">
+                                    <span id="first_error"></span>
+                                </div>
+
+                                <!-- last name -->
+                                <div class="col">
+                                    <input id="last_name" name="lname" type="text" class="form-control" placeholder="Last name" aria-label="Last name" value="<?= isset($last_name) ? $last_name : "" ?>">
+                                    <span id="last_error"></span>
+
+                                </div>
+                            </div>
+
+                            <!-- email -->
+                            <div class="col mb-3">
+                                <input id="email" name="email" type="text" class="form-control" placeholder="Email" aria-label="Email" value="<?= isset($email) ? $email : "" ?>">
+                                <span id="email_error"></span>
+
+                            </div>
+
+                            <!-- phone number -->
+                            <div class="col mb-3">
+                                <input id="phone" name="phoneNo" type="text" class="form-control" placeholder="Phone number" aria-label="Phone number" value="<?= isset($phone_no) ? $phone_no : "" ?>">
+                                <span id="phone_error"></span>
+
+                            </div>
+
+                            <!-- gender -->
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gender" id="maleRadio" value="male" <?= isset($gender) && $gender === "male" ? "checked" : "" ?>>
+                                        <label class="form-check-label" for="maleRadio">
+                                            Male
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gender" id="femaleRadio" value="female" <?= isset($gender) && $gender === "female" ? "checked" : "" ?>>
+                                        <label class="form-check-label" for="femaleRadio">
+                                            Female
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gender" id="otherRadio" value="other" <?= isset($gender) && $gender === "other" ? "checked" : "" ?>>
+                                        <label class="form-check-label" for="otherRadio">
+                                            Others
+                                        </label>
+                                    </div>
+                                </div>
+                                <span id="gender_error"></span>
+                            </div>
+
+
+                            <!-- user level -->
+                            <div class="col mb-3">
+                                <input id="userlevel" name="user_level" type="number" class="form-control" placeholder="User level" aria-label="Phone number" value="<?= isset($user_level) ? $user_level : "" ?>">
+                                <span id="userlevel_error"></span>
+                                <p>Note: 0(USER) and 1(ADMIN)</p>
+
+                            </div>
+                            <!-- password1 -->
+                            <div class="col mb-3">
+                                <input id="password1" name="pass1" type="password" class="form-control" placeholder="Password" aria-label="Phone number" value="<?= isset($password1) ? $password1 : "" ?>">
+                                <p>Enter a minimum of 8 characters</p>
+                                <span id="password1_error"></span>
+                                <i class="open bi bi-eye-fill" data-target="password1"></i>
+
+                            </div>
+
+                            <!-- password2 -->
+                            <div class="col mb-3">
+                                <input id="confirm_password" name="pass2" type="password" class="form-control" placeholder="Confirm Password" aria-label="Phone number" value="<?= isset($password2) ? $password2 : "" ?>">
+                                <span id="password2_error"></span>
+                                <i class="open bi bi-eye-fill" data-target="confirm_password"></i>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <div class="">
+                                    <button type="submit" class="btn btn-primary">Register</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
+
+
+
     <script src="./delete.js"></script>
+
+    <script src="./registration-admin.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 </body>
+
 </html>
