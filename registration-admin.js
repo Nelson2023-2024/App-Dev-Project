@@ -9,6 +9,7 @@ const phoneNumber = document.getElementById('phone');
 const maleRadio = document.getElementById('maleRadio')
 const femaleRadio = document.getElementById('femaleRadio')
 const otherRadio = document.getElementById('otherRadio');
+const userLevel = document.getElementById('userlevel');
 const password1 = document.getElementById('password1');
 const passwordConfirm = document.getElementById('confirm_password');
 
@@ -18,6 +19,7 @@ const lastError = document.getElementById('last_error');
 const emailError = document.getElementById('email_error');
 const phoneError = document.getElementById('phone_error');
 const genderError = document.getElementById('gender_error');
+const userlevelError = document.getElementById('userlevel_error')
 const password1Error = document.getElementById('password1_error');
 const password2Error = document.getElementById('password2_error');
 
@@ -86,7 +88,14 @@ if(!maleRadio.checked && !femaleRadio.checked && !otherRadio.checked){
 }
 else genderError.innerHTML = ""
 
-
+//userLevel validation
+if(userLevel.value.trim() === ""){
+    userlevelError.innerHTML = "Please fill in the user level"
+}
+else if(userLevel.value !== "0" && userLevel.value !== "1"){
+    userlevelError.innerHTML = "User level can only be 0 or 1"
+}
+else userlevelError.innerHTML = ''
 //password validation
 if(password1.value.trim() !=="" ){
     password1Error.innerHTML = ""
