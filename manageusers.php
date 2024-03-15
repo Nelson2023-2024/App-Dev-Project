@@ -65,6 +65,7 @@ else {
             font-size: 3rem;
             margin-top: 5rem;
         }
+
         span {
             color: red;
             font-size: 13.5px;
@@ -102,7 +103,6 @@ else {
             ?>
         </div>
 
-        <a href="./registration-admin.php" class="btn btn-primary mb-3">+ New Client</a>
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             + New Client
@@ -127,7 +127,7 @@ else {
                 <?php
 
                 // Number of users per page
-                $users_per_page = 4;
+                $users_per_page = 5;
 
                 // Get the current page number from the URL parameter
                 $page = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -187,6 +187,116 @@ else {
                     </div>
                     <div class="modal-body">
                         <form action="" id="form" class="mx-auto" method="post">
+                            <?php
+                            try {
+
+                                //connection
+                                //error array
+                                $errors = [];
+                                if ($_SERVER['REQUEST_METHOD'] === "POST") {
+                                    //var_dump($_POST);
+                                    $first_name = trim($_POST['fname']);
+                                    $last_name = trim($_POST['lname']);
+                                    $email =  trim($_POST['email']);
+                                    $phone_no = trim($_POST['phoneNo']);
+                                    $gender = trim($_POST['gender']);
+                                    $user_level = trim($_POST['user_level']);
+                                    $password1 = trim($_POST['pass1']);
+                                    $password2 = trim($_POST['pass2']);
+
+                                    //first name validation
+                                    if (empty($first_name)) array_push($errors, "Please enter the users first name");
+
+                                    //last name validation
+                                    if (empty($last_name)) array_push($errors, "Please enter the users last name");
+
+                                    //email validation
+                                    if (empty($email)) array_push($errors, "Please enter the users email");
+
+                                    //email format validation
+                                    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                                        array_push($errors, "Invalid email format");
+                                    }
+
+                                    //duplicate email validation
+                                    $select_stmt = mysqli_stmt_init($dbcon);
+                                    $select_query = "SELECT email FROM users WHERE email = ?";
+                                    mysqli_stmt_prepare($select_stmt, $select_query);
+                                    mysqli_stmt_bind_param($select_stmt, 's', $email);
+                                    mysqli_stmt_execute($select_stmt);
+                                    $result = mysqli_stmt_get_result($select_stmt);
+
+                                    $row = mysqli_fetch_assoc($result);
+
+                                    //result is found
+                                    if ($row) {
+                                        array_push($errors, "Email arleady exists");
+                                    }
+
+                                    //gender name validation
+                                    if (empty($gender)) array_push($errors, "Please enter the users gender");
+
+
+
+                                    //user level validation
+                                    if ((int)$user_level !== 0 && (int)$user_level !== 1) {
+                                        array_push($errors, "User level can only be 0(USER) or 1(ADMIN)");
+                                    }
+
+                                    //if password1 is  not empty
+                                    if (!empty($password1)) {
+                                        if (strlen($password1) < 8) {
+                                            array_push($errors, "Password must be at least 8 characters long");
+                                        }
+                                        //if both passwords are not equal
+                                        if ($password1 !== $password2) {
+                                            array_push($errors, "The two passwords did not match");
+                                        }
+                                    }
+                                    //if password1 is empty
+                                    else {
+                                        array_push($errors, "Please enter the users password");
+                                    }
+
+
+                                    //traverse the array to output errors
+                                    foreach ($errors as $error) {
+                                        echo '<div style="height:40px; display: flex; align-items:center; justify-content:center;" class="alert alert-danger text-center " role="alert"><strong>' . $error . '</strong></div>';
+                                    }
+
+                                    //if everything is ok
+                                    if (empty($errors)) {
+
+                                        //hash password
+                                        $password_hash = password_hash($password1, PASSWORD_DEFAULT);
+
+                                        $insert_stmt = mysqli_stmt_init($dbcon);
+                                        $insert_query = "INSERT INTO users (first_name, last_name, email, phone_number, gender, password, user_level) VALUES(?,?,?,?,?,?,?)";
+
+                                        mysqli_stmt_prepare($insert_stmt, $insert_query);
+                                        mysqli_stmt_bind_param($insert_stmt, 'ssssssi', $first_name, $last_name, $email, $phone_no, $gender, $password_hash, $user_level);
+                                        mysqli_stmt_execute($insert_stmt);
+
+                                        if (mysqli_stmt_affected_rows($insert_stmt) == 1) {
+                                            echo '<div class="alert alert-success text-center" role="alert"><strong>Registered User sucefully</strong></div>';
+                                        } else {
+                                            echo "Failed to register user";
+                                        }
+                                    }
+                                }
+                            }
+                            //database exception
+                            catch (mysqli_sql_exception $e) {
+                                echo "Database Exception" . $e->getMessage();
+                            }
+                            //general exception
+                            catch (Exception $e) {
+                                echo "General Exception" . $e->getMessage();
+                            }
+
+
+                            ?>
+
                             <div class="row g-3 mb-3">
                                 <!-- first name -->
                                 <div class="col">
