@@ -49,7 +49,7 @@ try{
 
                     $_SESSION['user_level'] === 0 
                     ?header("Location: memberspage.php")
-                    :header("Location: admin-panel.php");
+                    :header("Location: dashboard.php");
                     exit();
                    }
 
