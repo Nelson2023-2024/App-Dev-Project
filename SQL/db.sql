@@ -1,4 +1,4 @@
-CREATE DATABASE `app-dev`;
+CREATE DATABASE app-dev;
 
 CREATE TABLE users(
     id MEDIUMINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -7,7 +7,7 @@ CREATE TABLE users(
     email VARCHAR(255) NOT NULL UNIQUE,
     phone_number VARCHAR(100) NOT NULL,
     gender ENUM('male', 'female', 'other') NOT NULL,
-    password VARCHAR(100) NOT NULL,
+    password VARCHAR(100) NOT NULL
     registration_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     user_level TINYINT(1) UNSIGNED NOT NULL
 );
