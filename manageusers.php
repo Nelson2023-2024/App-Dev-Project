@@ -170,7 +170,7 @@ else {
 
             // Output pagination buttons
             for ($btn = 1; $btn <= $total_pages; $btn++) {
-                echo "<a class='btn btn-dark text-light mx-2 mb-3' href='admin-panel.php?page=$btn'>$btn</a>";
+                echo "<a class='btn btn-dark text-light mx-2 mb-3' href='manageusers.php?page=$btn'>$btn</a>";
             }
             ?>
         </div>
