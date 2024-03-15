@@ -65,6 +65,29 @@ else {
             font-size: 3rem;
             margin-top: 5rem;
         }
+        span {
+            color: red;
+            font-size: 13.5px;
+        }
+
+        p {
+            font-size: 12.5px;
+            margin-bottom: 2px;
+            font-weight: bold;
+        }
+
+        div .col {
+            position: relative;
+        }
+
+        i {
+            position: absolute;
+            right: 5px;
+            top: 6px;
+            cursor: pointer;
+            font-size: 18px;
+
+        }
     </style>
 </head>
 
@@ -163,7 +186,7 @@ else {
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="" class="mx-auto" method="post">
+                        <form action="" id="form" class="mx-auto" method="post">
                             <div class="row g-3 mb-3">
                                 <!-- first name -->
                                 <div class="col">
