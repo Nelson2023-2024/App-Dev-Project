@@ -54,12 +54,12 @@
 
             move_uploaded_file($_FILES['product-image']['tmp_name'], './Uploads/' . $new_filename);
 
-            echo $new_filename . "<br>";
+            // echo $new_filename . "<br>";
 
-            var_dump($_POST);
-            echo "<pre>";
-            var_dump($_FILES);
-            echo "</pre>";
+            // var_dump($_POST);
+            // echo "<pre>";
+            // var_dump($_FILES);
+            // echo "</pre>";
 
 
             if (!empty($product_title) || !empty($product_image) || !empty($product_price) || !empty($product_description)) {
@@ -100,6 +100,8 @@
                     <td>Mark</td>
                     <td>Otto</td>
                     <td>@mdo</td>
+                    <td><a href="">Edit</a></td>
+                    <td><a href="">Delete</a></td>
                 </tr>
                 
             </tbody>

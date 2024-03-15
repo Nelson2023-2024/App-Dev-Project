@@ -1,6 +1,6 @@
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Launch demo modal
+<button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    + New Course
 </button>
 
 <!-- Modal -->
@@ -12,7 +12,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="" method="POST" class=" " style="max-width: 600px;" id="form" enctype="multipart/form-data">
+                <form action="" method="POST" class=" " style="max-width: 600px;" id="form" enctype="multipart/form-data"> 
                     <h1 class="text-center">Add New Course</h1>
 
                     <div class="row g-3 mb-2">
