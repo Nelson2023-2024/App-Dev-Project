@@ -129,8 +129,13 @@ try{
         mysqli_stmt_bind_param($update_user_stmt, 'sssssii', $first_name, $last_name, $email, $phone_number, $gender, $user_level, $id);
         if(mysqli_stmt_execute($update_user_stmt)){
             if(mysqli_stmt_affected_rows($update_user_stmt) > 0) {
-                echo "<script>alert('SUCCESSFULLY UPDATED'); window.location.href = 'admin-panel.php';</script>";
-            } else {
+                echo "<script>alert('SUCCESSFULLY UPDATED'); window.location.href = 'manageusers.php';</script>";
+            } 
+            elseif(!mysqli_stmt_affected_rows($update_user_stmt) > 0){
+                echo "<script>alert('NOT UPDATED'); window.location.href = 'manageusers.php';</script>";
+
+            }
+            else {
                 echo "No rows were affected by the update.";
             }
         }

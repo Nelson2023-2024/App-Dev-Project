@@ -103,6 +103,7 @@ else {
             ?>
         </div>
 
+
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             + New Client
@@ -275,10 +276,10 @@ else {
 
                                         mysqli_stmt_prepare($insert_stmt, $insert_query);
                                         mysqli_stmt_bind_param($insert_stmt, 'ssssssi', $first_name, $last_name, $email, $phone_no, $gender, $password_hash, $user_level);
-                                        mysqli_stmt_execute($insert_stmt);
+                                        $res = mysqli_stmt_execute($insert_stmt);
 
-                                        if (mysqli_stmt_affected_rows($insert_stmt) == 1) {
-                                            echo '<div class="alert alert-success text-center" role="alert"><strong>Registered User sucefully</strong></div>';
+                                        if ($res) {
+                                            echo '<script>alert("Inserted succefully")</script>';
                                         } else {
                                             echo "Failed to register user";
                                         }
