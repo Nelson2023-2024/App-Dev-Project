@@ -24,6 +24,10 @@
             color: red;
             font-size: 13px;
         }
+        img{
+            width: 50px;
+            height: 50px;
+        }
     </style>
     <title>Document</title>
 </head>
@@ -83,6 +87,18 @@
 
         <?php include('./add-products_modal.php') ?>
 
+        <?php
+        $select_stmt = mysqli_stmt_init($dbcon);
+        $select_query = "SELECT * FROM categories";
+        mysqli_stmt_prepare($select_stmt, $select_query);
+        mysqli_stmt_execute($select_stmt);
+        $result = mysqli_stmt_get_result($select_stmt);
+
+
+
+
+        ?>
+
         <table class="table">
             <thead>
                 <tr>
@@ -95,15 +111,29 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                
+                    <?php
+                    while ($row = mysqli_fetch_assoc($result)) {
+                       // var_dump($row);
+                        echo '
+                        <tr>
+                        <th scope="row">'.$row['id'].'</th>
+                    <td>'.$row['product_title'].'</td>
+                    <td><img src="./Uploads/'.$row['product_image'].'" alt=""></td>
+                    <td>'.$row['product_price'].'</td>
                     <td><a href="">Edit</a></td>
                     <td><a href="">Delete</a></td>
-                </tr>
+                        
+                    </tr>
+                        
+                        ';
+                    }
+
+
+                    ?>
+
                 
+
             </tbody>
         </table>
 
