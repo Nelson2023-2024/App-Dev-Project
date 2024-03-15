@@ -17,9 +17,7 @@
     <style>
         body {
             height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+
         }
 
         span {
@@ -31,9 +29,12 @@
 </head>
 
 <body>
-    <div class="container" style="margin-top: 130px;">
-    
-    <?php include("./navbar.php")?>
+    <div class="container">
+        <?php include("./navbar.php") ?>
+
+    </div>
+    <div class="container" style="">
+
 
         <?php
         require('./mysqli_connect.php');
@@ -49,11 +50,11 @@
             //new filename
             $unique_id = uniqid();
 
-            $new_filename = $unique_id.$product_image;
+            $new_filename = $unique_id . $product_image;
 
-            move_uploaded_file($_FILES['product-image']['tmp_name'],'./Uploads/'.$new_filename);
+            move_uploaded_file($_FILES['product-image']['tmp_name'], './Uploads/' . $new_filename);
 
-            echo $new_filename ."<br>";
+            echo $new_filename . "<br>";
 
             var_dump($_POST);
             echo "<pre>";
@@ -61,60 +62,49 @@
             echo "</pre>";
 
 
-            if(!empty($product_title) || !empty($product_image) || !empty($product_price) || !empty($product_description)){
+            if (!empty($product_title) || !empty($product_image) || !empty($product_price) || !empty($product_description)) {
 
                 $insert_stmt = mysqli_stmt_init($dbcon);
-                $insert_query = "INSERT INTO categories (product_title, product_image, product_price, product_description) VALUES(?,?,?,?)" ;
+                $insert_query = "INSERT INTO categories (product_title, product_image, product_price, product_description) VALUES(?,?,?,?)";
                 mysqli_stmt_prepare($insert_stmt, $insert_query);
-                mysqli_stmt_bind_param($insert_stmt,'ssss', $product_title, $new_filename, $product_price, $product_description);
+                mysqli_stmt_bind_param($insert_stmt, 'ssss', $product_title, $new_filename, $product_price, $product_description);
 
                 $result = mysqli_stmt_execute($insert_stmt);
-
-            }
-            else{
+            } else {
                 array_push($errors, "All fields are required");
             }
         } else {
-            echo "GET";
+            // echo "GET";
         }
 
 
         ?>
+        <!-- Content -->
 
-        <form action="" method="POST" class="mx-auto border  py-5 px-2" style="width: 600px;" id="form" enctype="multipart/form-data">
-            <h1 class="text-center">Add New Product FrontEnd</h1>
+        <?php include('./add-products_modal.php') ?>
 
-            <div class="row g-3 mb-2">
-                <div class="">
-                    <input type="text" class="form-control" placeholder="Product Title" id="product-title" name="product-title">
-                    <span id="product-title-error"></span>
-                </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Product Title</th>
+                    <th scope="col">Photo</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                </tr>
+                
+            </tbody>
+        </table>
 
-            </div>
-
-            <div class=" mb-2">
-                <input type="file" class="form-control" id="product-image" name="product-image">
-                <span id="product-image-error"></span>
-
-            </div>
-
-            <div class="row g-3 mb-2">
-                <div class="">
-                    <input type="text" class="form-control" placeholder="Price" id="product-price" name="product-price">
-                    <span id="product-price-error"></span>
-
-                </div>
-            </div>
-
-            <div class=" mb-3">
-                <textarea style="width: 100%;" class="form-control" name="product-description" id="product-description" cols="10" rows="5" placeholder=" Description"></textarea>
-                <span id="product-description-error"></span>
-
-            </div>
-
-            <button style="width: 100%; height: 40px;" class="btn btn-primary">Add New Product</button>
-
-        </form>
     </div>
 
 
