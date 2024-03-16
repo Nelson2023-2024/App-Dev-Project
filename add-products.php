@@ -119,7 +119,7 @@
                         <tr>
                         <th scope="row">'.$row['id'].'</th>
                     <td>'.$row['product_title'].'</td>
-                    <td style="position: relative;"><img src="./Uploads/'.$row['product_image'].'" alt=""> <i data-bs-toggle="modal" data-bs-target="#uploadModal" style="cursor:pointer; position: absolute; bottom:0;" class="bi bi-cloud-arrow-up"></i></td>
+                    <td style="position: relative;"><img src="./Uploads/'.$row['product_image'].'" alt=""> </td>
                     <td>'.$row['product_price'].'</td>
                     <td><a href="edit-products.php?id='.$row['id'].'">Edit</a></td>
                     <td><a href="">Delete</a></td>
