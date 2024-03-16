@@ -121,7 +121,7 @@
                     <td>'.$row['product_title'].'</td>
                     <td><img src="./Uploads/'.$row['product_image'].'" alt=""></td>
                     <td>'.$row['product_price'].'</td>
-                    <td><a href="">Edit</a></td>
+                    <td><a href="edit-products.php?id='.$row['id'].'">Edit</a></td>
                     <td><a href="">Delete</a></td>
                         
                     </tr>
@@ -136,6 +136,7 @@
 
             </tbody>
         </table>
+        <a href=""></a>
 
     </div>
 
