@@ -90,9 +90,9 @@ catch (Exception $e){
             <ul id="nav-links-container" style="align-items: center;" >
 
                 <i class="fa fa-times" aria-hidden="true"></i>
-                <li><a href="./index.html">Home</a></li>
+                <li><a href="./memberspage.php">Home</a></li>
                 <li><a href="./pricing.php">Courses</a></li>
-                <li><a href="./contact.html">Contact</a></li>
+                <li><a href="#">Contact</a></li>
                 <li style="background: red; padding:1rem ; border-radius:10px;"><a href="./logout.php">Logout</a></li>
             </ul>
 
