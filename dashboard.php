@@ -96,78 +96,98 @@ else {
 
         <?php
 
-        $users_data = [];
+        $users_data = array();
 
-        //Total registered users
+        // Total registered users
         $total_users_query = "SELECT COUNT(*) as total_users FROM users";
         $total_users_result = mysqli_query($dbcon, $total_users_query);
         $total_users_row = mysqli_fetch_assoc($total_users_result);
-        //var_dump($total_users_row);
-        array_push($users_data, array("y" => $total_users_row['total_users'], "label" => "Total Users"));
+        $users_data[] = array("y" => $total_users_row['total_users'], "label" => "Total Users");
 
-        //Total males
-        $total_males_query = "SELECT COUNT(*) as male_users FROM users WHERE gender = 'male'";
-        $total_males_result = mysqli_query($dbcon, $total_males_query);
-        $total_male_row = mysqli_fetch_assoc($total_males_result);
-        array_push($users_data, array("y" => $total_male_row['male_users'], "label" => "Male Users"));
+        // Male users
+        $male_users_query = "SELECT COUNT(*) as male_users FROM users WHERE gender = 'male'";
+        $male_users_result = mysqli_query($dbcon, $male_users_query);
+        $male_users_row = mysqli_fetch_assoc($male_users_result);
+        $users_data[] = array("y" => $male_users_row['male_users'], "label" => "Male Users");
 
-        //Total female
-        $total_female_query = "SELECT COUNT(*) as female_users FROM users WHERE gender = 'female'";
-        $total_female_result = mysqli_query($dbcon, $total_female_query);
-        $total_female_row = mysqli_fetch_assoc($total_female_result);
-        array_push($users_data, array("y" => $total_female_row['female_users'], "label" => "Female Users"));
+        // Female users
+        $female_users_query = "SELECT COUNT(*) as female_users FROM users WHERE gender = 'female'";
+        $female_users_result = mysqli_query($dbcon, $female_users_query);
+        $female_users_row = mysqli_fetch_assoc($female_users_result);
+        $users_data[] = array("y" => $female_users_row['female_users'], "label" => "Female Users");
 
-        //other gender
-        $total_other_query = "SELECT COUNT(*) as other_users FROM users WHERE gender = 'other'";
-        $total_other_result = mysqli_query($dbcon, $total_other_query);
-        $total_other_rows = mysqli_fetch_assoc($total_other_result);
-        array_push($users_data, array("y" => $total_other_rows['other_users'], "label" => "Other users"));
+        //other users
+        $other_users_query = "SELECT COUNT(*) as other_users FROM users WHERE gender = 'other'";
+        $other_users_result = mysqli_query($dbcon, $other_users_query);
+        $other_users_row = mysqli_fetch_assoc($other_users_result);
+        array_push($users_data, array("y" => $other_users_row['other_users'], "label" => "Other users"));
 
-        //admin
-        $total_admin_query = "SELECT COUNT(*) as total_admin FROM users WHERE user_level = '1' ";
-        $total_admin_result = mysqli_query($dbcon, $total_admin_query);
-        $total_admin_rows =    mysqli_fetch_assoc($total_admin_result);
-        array_push($users_data, array("y" => $total_admin_rows['total_admin'], "label" => "Total Admins"));
+        // Admin users
+        $admin_users_query = "SELECT COUNT(*) as admin_users FROM users WHERE user_level = 1";
+        $admin_users_result = mysqli_query($dbcon, $admin_users_query);
+        $admin_users_row = mysqli_fetch_assoc($admin_users_result);
+        $users_data[] = array("y" => $admin_users_row['admin_users'], "label" => "Admin Users");
 
+        
+
+        // Fetching data for categories chart
+        $categories_data = array();
+
+        // Total available products
+        $total_products_query = "SELECT COUNT(*) as total_products FROM categories";
+        $total_products_result = mysqli_query($dbcon, $total_products_query);
+        $total_products_row = mysqli_fetch_assoc($total_products_result);
+        $categories_data[] = array("y" => $total_products_row['total_products'], "label" => "Total Products");
 
         ?>
 
         <script>
             window.onload = function() {
-
-                var chart = new CanvasJS.Chart("chartContainer", {
+                var usersChart = new CanvasJS.Chart("usersChartContainer", {
                     animationEnabled: true,
                     theme: "light2",
                     title: {
                         text: "User Statistics"
                     },
                     axisY: {
-                        title: "Number of Users "
+                        title: "Number of Users"
                     },
                     data: [{
                         type: "column",
-                        yValueFormatString: "#,##0.## Users",
+                        yValueFormatString: "#,##0 Users",
                         dataPoints: <?php echo json_encode($users_data, JSON_NUMERIC_CHECK); ?>
                     }]
                 });
-                chart.render();
+                usersChart.render();
 
+                var categoriesChart = new CanvasJS.Chart("categoriesChartContainer", {
+                    animationEnabled: true,
+                    theme: "light2",
+                    title: {
+                        text: "Categories Statistics"
+                    },
+                    axisY: {
+                        title: "Number of Products"
+                    },
+                    data: [{
+                        type: "column",
+                        yValueFormatString: "#,##0 Products",
+                        dataPoints: <?php echo json_encode($categories_data, JSON_NUMERIC_CHECK); ?>
+                    }]
+                });
+                categoriesChart.render();
             }
         </script>
         </head>
 
         <body>
-            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-            <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+            <div id="usersChartContainer" style="height: 370px; width: 50%; float: left;"></div>
+            <div id="categoriesChartContainer" style="height: 370px; width: 50%; float: left;"></div>
+            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
         </body>
 
 </html>
 
 
 
-</div>
-
-<script src="./delete.js"></script>
-</body>
-
-</html>
+=
