@@ -17,14 +17,14 @@
     <style>
         body {
             height: 100vh;
-
         }
 
         span {
             color: red;
             font-size: 13px;
         }
-        img{
+
+        img {
             width: 50px;
             height: 50px;
         }
@@ -37,7 +37,7 @@
         <?php include("./navbar.php") ?>
 
     </div>
-    <div class="container" >
+    <div class="container">
 
 
         <?php
@@ -89,15 +89,16 @@
         <?php include('./add-products_modal.php') ?>
 
         <?php
+        $items_per_page = 5; // Change this value to adjust the number of items per page
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+        $starting_limit = ($page - 1) * $items_per_page;
+
         $select_stmt = mysqli_stmt_init($dbcon);
-        $select_query = "SELECT * FROM categories";
+        $select_query = "SELECT * FROM categories LIMIT ?, ?";
         mysqli_stmt_prepare($select_stmt, $select_query);
+        mysqli_stmt_bind_param($select_stmt, 'ii', $starting_limit, $items_per_page);
         mysqli_stmt_execute($select_stmt);
         $result = mysqli_stmt_get_result($select_stmt);
-
-
-
-
         ?>
 
         <table class="table">
@@ -112,33 +113,36 @@
                 </tr>
             </thead>
             <tbody>
-                
-                    <?php
-                    while ($row = mysqli_fetch_assoc($result)) {
-                       // var_dump($row);
-                        echo '
-                        <tr>
-                        <th scope="row">'.$row['id'].'</th>
-                    <td>'.$row['product_title'].'</td>
-                    <td style="position: relative;"><img src="./Uploads/'.$row['product_image'].'" alt=""> </td>
-                    <td>'.$row['product_price'].'</td>
-                    <td><a href="edit-products.php?id='.$row['id'].'">Edit</a></td>
-                    <td><a href="delete-products.php?id='.$row['id'].'">Delete</a></td>
-                        
+                <?php
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo '
+                    <tr>
+                        <th scope="row">' . $row['id'] . '</th>
+                        <td>' . $row['product_title'] . '</td>
+                        <td style="position: relative;"><img src="./Uploads/' . $row['product_image'] . '" alt=""> </td>
+                        <td>' . $row['product_price'] . '</td>
+                        <td><a href="edit-products.php?id=' . $row['id'] . '">Edit</a></td>
+                        <td><a href="delete-products.php?id=' . $row['id'] . '">Delete</a></td>
                     </tr>
-                        
-                        ';
-                    }
-
-
-                    ?>
-
-                
-
+                    ';
+                }
+                ?>
             </tbody>
         </table>
-        <a href=""></a>
 
+        <!-- Pagination -->
+        <div class="text-center">
+            <?php
+            $total_records_query = "SELECT COUNT(*) AS total FROM categories";
+            $total_records_result = mysqli_query($dbcon, $total_records_query);
+            $total_records = mysqli_fetch_assoc($total_records_result)['total'];
+            $total_pages = ceil($total_records / $items_per_page);
+
+            for ($i = 1; $i <= $total_pages; $i++) {
+                echo '<a class="btn btn-dark text-light mx-2 mb-3 mt-3" href="?page=' . $i . '">' . $i . '</a>';
+            }
+            ?>
+        </div>
     </div>
 
 
