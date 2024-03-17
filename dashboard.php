@@ -94,54 +94,80 @@ else {
 
         ?>
 
-<?php
- 
- $dataPoints = array( 
-     array("y" => 3373.64, "label" => "Germany" ),
-     array("y" => 2435.94, "label" => "France" ),
-     array("y" => 1842.55, "label" => "China" ),
-     array("y" => 1828.55, "label" => "Russia" ),
-     array("y" => 1039.99, "label" => "Switzerland" ),
-     array("y" => 765.215, "label" => "Japan" ),
-     array("y" => 612.453, "label" => "Netherlands" )
- );
-  
- ?>
- 
- <script>
- window.onload = function() {
-  
- var chart = new CanvasJS.Chart("chartContainer", {
-     animationEnabled: true,
-     theme: "light2",
-     title:{
-         text: "Gold Reserves"
-     },
-     axisY: {
-         title: "Gold Reserves (in tonnes)"
-     },
-     data: [{
-         type: "column",
-         yValueFormatString: "#,##0.## tonnes",
-         dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
-     }]
- });
- chart.render();
-  
- }
- </script>
- </head>
- <body>
- <div id="chartContainer" style="height: 370px; width: 100%;"></div>
- <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
- </body>
- </html> 
+        <?php
+
+        $users_data = [];
+
+        //Total registered users
+        $total_users_query = "SELECT COUNT(*) as total_users FROM users";
+        $total_users_result = mysqli_query($dbcon, $total_users_query);
+        $total_users_row = mysqli_fetch_assoc($total_users_result);
+        //var_dump($total_users_row);
+        array_push($users_data, array("y" => $total_users_row['total_users'], "label" => "Total Users"));
+
+        //Total males
+        $total_males_query = "SELECT COUNT(*) as male_users FROM users WHERE gender = 'male'";
+        $total_males_result = mysqli_query($dbcon, $total_males_query);
+        $total_male_row = mysqli_fetch_assoc($total_males_result);
+        array_push($users_data, array("y" => $total_male_row['male_users'], "label" => "Male Users"));
+
+        //Total female
+        $total_female_query = "SELECT COUNT(*) as female_users FROM users WHERE gender = 'female'";
+        $total_female_result = mysqli_query($dbcon, $total_female_query);
+        $total_female_row = mysqli_fetch_assoc($total_female_result);
+        array_push($users_data, array("y" => $total_female_row['female_users'], "label" => "Female Users"));
+
+        //other gender
+        $total_other_query = "SELECT COUNT(*) as other_users FROM users WHERE gender = 'other'";
+        $total_other_result = mysqli_query($dbcon, $total_other_query);
+        $total_other_rows = mysqli_fetch_assoc($total_other_result);
+        array_push($users_data, array("y" => $total_other_rows['other_users'], "label" => "Other users"));
+
+        //admin
+        $total_admin_query = "SELECT COUNT(*) as total_admin FROM users WHERE user_level = '1' ";
+        $total_admin_result = mysqli_query($dbcon, $total_admin_query);
+        $total_admin_rows =    mysqli_fetch_assoc($total_admin_result);
+        array_push($users_data, array("y" => $total_admin_rows['total_admin'], "label" => "Total Admins"));
+
+
+        ?>
+
+        <script>
+            window.onload = function() {
+
+                var chart = new CanvasJS.Chart("chartContainer", {
+                    animationEnabled: true,
+                    theme: "light2",
+                    title: {
+                        text: "User Statistics"
+                    },
+                    axisY: {
+                        title: "Number of Users "
+                    },
+                    data: [{
+                        type: "column",
+                        yValueFormatString: "#,##0.## Users",
+                        dataPoints: <?php echo json_encode($users_data, JSON_NUMERIC_CHECK); ?>
+                    }]
+                });
+                chart.render();
+
+            }
+        </script>
+        </head>
+
+        <body>
+            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+            <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+        </body>
+
+</html>
 
 
 
-    </div>
+</div>
 
-    <script src="./delete.js"></script>
+<script src="./delete.js"></script>
 </body>
 
 </html>
