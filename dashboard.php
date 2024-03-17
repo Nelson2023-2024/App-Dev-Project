@@ -88,9 +88,22 @@ else {
         $result = mysqli_stmt_get_result($display_stmt);
 
         $row = mysqli_fetch_array($result);
-        var_dump($row);
+        //var_dump($row);
 
+        $display_products_stmt = mysqli_stmt_init($dbcon);
+        $display_products_query = "SELECT COUNT(*) AS total FROM categories";
+        mysqli_stmt_prepare($display_products_stmt, $display_products_query);
+        mysqli_stmt_execute($display_products_stmt);
+
+        $result_product = mysqli_stmt_get_result($display_products_stmt);
+
+        $raw = mysqli_fetch_array($result_product);
+        //var_dump($raw);
+
+        echo "<div style='display:flex; gap:1rem;'>";
         echo "<div class='total-box mb-3'><h3>Total registered User <br> <h2>$row[total]</h2></h3></div>";
+        echo "<div class='total-box mb-3'><h3>Total Courses Available <br> <h2>$raw[total]</h2></h3></div>";
+        echo "</div>";
 
         ?>
 
