@@ -85,6 +85,7 @@
         ?>
         <!-- Content -->
 
+        <button data-bs-toggle="modal" class="btn btn-primary mt-5" data-bs-target="#exampleModal" style="cursor:pointer;">+ New Course</button>
         <?php include('./add-products_modal.php') ?>
 
         <?php
@@ -122,7 +123,7 @@
                     <td style="position: relative;"><img src="./Uploads/'.$row['product_image'].'" alt=""> </td>
                     <td>'.$row['product_price'].'</td>
                     <td><a href="edit-products.php?id='.$row['id'].'">Edit</a></td>
-                    <td><a href="">Delete</a></td>
+                    <td><a href="delete-products.php?id='.$row['id'].'">Delete</a></td>
                         
                     </tr>
                         
