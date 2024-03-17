@@ -1,6 +1,6 @@
 <?php
 session_start();
-var_dump($_SESSION);
+//var_dump($_SESSION);
 
 if($_SESSION["user_level"] !== 1 || !isset($_SESSION["user_level"]) ){
     header("Location: login.php");

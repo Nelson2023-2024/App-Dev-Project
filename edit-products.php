@@ -46,9 +46,9 @@ if ($_SESSION["user_level"] !== 1 || !isset($_SESSION["user_level"])) {
         <?php include('./navbar.php') ?>
 
 
-        <a style="font-size: 2rem;" href="./admin-panel.php"><i class="bi bi-house"></i>
+        <!-- <a style="font-size: 2rem;" href="./admin-panel.php"><i class="bi bi-house"></i>
             home
-        </a>
+        </a> -->
 
 
 
@@ -120,10 +120,10 @@ if ($_SESSION["user_level"] !== 1 || !isset($_SESSION["user_level"])) {
         }
         ?>
 
-        <div>
+        <!-- <div>
             <button data-bs-toggle="modal" data-bs-target="#uploadModal" style="cursor:pointer;"><i  class="bi bi-cloud-arrow-up"></i>Upload Image</button>
             
-        </div>
+        </div> -->
         <h1 class="text-center mt-3">Update </h1>
         <form action="" id="form" method="post" class="mx-auto">
 

@@ -150,7 +150,7 @@ else {
         $total_products_query = "SELECT COUNT(*) as total_products FROM categories";
         $total_products_result = mysqli_query($dbcon, $total_products_query);
         $total_products_row = mysqli_fetch_assoc($total_products_result);
-        $categories_data[] = array("y" => $total_products_row['total_products'], "label" => "Total Products");
+        $categories_data[] = array("y" => $total_products_row['total_products'], "label" => "Total Courses");
 
         ?>
 
@@ -184,7 +184,7 @@ else {
                     },
                     data: [{
                         type: "column",
-                        yValueFormatString: "#,##0 Products",
+                        yValueFormatString: "#,##0 Courses",
                         dataPoints: <?php echo json_encode($categories_data, JSON_NUMERIC_CHECK); ?>
                     }]
                 });
